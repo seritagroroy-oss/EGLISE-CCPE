@@ -1,0 +1,2403 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plateforme Église Connectée - Démonstration Interactive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script>
+  // Navigation immédiate du portail
+  function showPortalSection(sectionId) {
+    document.querySelectorAll('.portal-section, #portal-demo').forEach(s => {
+      s.classList.add('hidden');
+    });
+    const target = document.getElementById('portal-' + sectionId);
+    if (target) {
+      target.classList.remove('hidden');
+    }
+    const viewSwitcher = document.getElementById('demo-view-switcher');
+    if (viewSwitcher) {
+      if (sectionId === 'demo') {
+        viewSwitcher.classList.remove('hidden');
+      } else {
+        viewSwitcher.classList.add('hidden');
+      }
+    }
+    document.querySelectorAll('.portal-nav-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = document.getElementById('portal-btn-' + sectionId);
+    if (activeBtn) activeBtn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ============================================== -->
+  <!-- POPUP D'ACCUEIL : CRÉDIT DU CONCEPTEUR         -->
+  <!-- ============================================== -->
+  <div id="author-welcome-overlay" class="author-overlay" role="dialog" aria-modal="true" aria-labelledby="author-welcome-title">
+    <div class="author-modal">
+      <div class="author-modal-glow"></div>
+      <div class="author-logo-ring">
+        <img src="logo.png" alt="Logo CCPE">
+      </div>
+      <span class="author-tag">✨ Document Officiel de Conception</span>
+      <h2 id="author-welcome-title">Bienvenue dans l'Architecture<br><span>de l'Application CCPE</span></h2>
+      <p class="author-intro">
+        L'architecture globale, la feuille de route technique et la proposition budgétaire de l'écosystème numérique du
+        <strong>Centre Chrétien Parole &amp; Esprit</strong> ont été entièrement pensées, conçues et réalisées par :
+      </p>
+      <div class="author-card">
+        <div class="author-avatar">ST</div>
+        <div>
+          <strong class="author-name">SERI TAGRO ROY</strong>
+          <span class="author-role">Développeur &amp; Concepteur de la Solution</span>
+        </div>
+      </div>
+      <p class="author-dedication">
+        « Ce travail est mis au service de la vision du <strong>Pasteur FIDEL ROMARIC</strong> et de toute l'assemblée CCPE, afin de bâtir une église connectée, unie et rayonnante. »
+      </p>
+      <button class="author-btn" id="author-welcome-btn" onclick="closeAuthorWelcome()">Découvrir le projet →</button>
+    </div>
+  </div>
+  <script>
+    function closeAuthorWelcome() {
+      const o = document.getElementById('author-welcome-overlay');
+      if (!o) return;
+      o.classList.add('closing');
+      setTimeout(() => o.remove(), 350);
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAuthorWelcome(); });
+  </script>
+
+  <!-- Barre Supérieure de Contrôle & Démonstration -->
+  <header class="top-nav">
+    <div class="brand">
+      <div class="brand-logo">
+        <img src="logo.png" alt="Centre Chrétien Parole & Esprit" class="brand-logo-img">
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">CENTRE CHRÉTIEN</span>
+        <span class="brand-subtitle">PAROLE & ESPRIT • Plateforme Officielle</span>
+      </div>
+    </div>
+
+    <!-- Sélecteur de vue (Mobile vs Admin) -->
+    <div class="view-switcher hidden" role="tablist" id="demo-view-switcher">
+      <button id="btn-view-split" class="view-btn active" title="Vue synchronisée côte à côte">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 3v18"/></svg>
+        <span>Vue Démonstration (Synchronisée)</span>
+      </button>
+      <button id="btn-view-mobile" class="view-btn" title="Vue application membre uniquement">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="3"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        <span>App Smartphone Membre</span>
+      </button>
+      <button id="btn-view-admin" class="view-btn" title="Vue panneau pasteur uniquement">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        <span>Tableau de Bord Pasteur</span>
+      </button>
+    </div>
+
+    <div class="top-actions">
+      <div class="portal-nav-links">
+        <button class="portal-nav-btn active" onclick="showPortalSection('cover')" id="portal-btn-cover">🏠 Accueil</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('plan')" id="portal-btn-plan">🏛️ Architecture</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('devis')" id="portal-btn-devis">💼 Budget & Devis</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('demo')" id="portal-btn-demo">🚀 Démo en Direct</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- PAGE 0 : ARCHITECTURE GLOBALE & BUDGET CCPE   -->
+  <!-- ============================================== -->
+  <section id="portal-cover" class="portal-section">
+    <div class="cover-portal">
+      <!-- Hero du Portail -->
+      <div class="cover-hero">
+        <div class="hero-duo-avatars">
+          <div class="hero-logo-box">
+            <img src="logo.png" alt="Logo CCPE">
+          </div>
+          <div class="hero-pastor-box">
+            <img src="pasteur_fidel.png" alt="Pasteur FIDEL ROMARIC" class="hero-pastor-img">
+            <div class="hero-pastor-badge">Pasteur Principal</div>
+          </div>
+        </div>
+        <span class="cover-church-tag">Centre Chrétien Parole & Esprit</span>
+        <h1 class="cover-main-title">
+          <span class="typewriter-wrapper">
+            <span class="gradient-text" id="typewriter-title">ARCHITECTURE GLOBALE & PROPOSITION BUDGÉTAIRE</span><span class="typewriter-cursor">|</span>
+          </span><br>
+          Conception de l'Écosystème Numérique de l'Église CCPE
+        </h1>
+        <p class="cover-subtitle">
+          Proposition officielle de développement de la plateforme numérique complète de l'église — Application mobile, tableau de bord pastoral et écosystème communautaire.
+        </p>
+        <div class="cover-pastor-mention">
+          <img src="pasteur_fidel.png" alt="" style="width:32px; height:32px; border-radius:50%; object-fit:cover; object-position:center 20%; border:2px solid #f59e0b;">
+          Présenté par <strong>Pasteur FIDEL ROMARIC</strong> • Direction Pastorale CCPE
+        </div>
+      </div>
+
+      <!-- Les 2 Grands Modules Cliquables -->
+      <div class="cover-modules-grid">
+        <!-- Module 1 : ARCHITECTURE DU PROJET -->
+        <div class="module-action-card card-plan" onclick="showPortalSection('plan')">
+          <div>
+            <span class="module-badge-tag tag-red">Module 1</span>
+            <div class="module-card-icon">🏛️</div>
+            <h3>Architecture du Projet</h3>
+            <p>Découvrez la feuille de route technique avec les phases de développement, les modules fonctionnels et le calendrier de déploiement.</p>
+            <ul class="module-card-features">
+              <li>Roadmap en 3 phases (MVP → V2 → V3)</li>
+              <li>Architecture technique & modules</li>
+              <li>Calendrier de livraison</li>
+              <li>Sécurité & infrastructure cloud</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-plan-action">
+            🏛️ Consulter l'Architecture du Projet →
+          </button>
+        </div>
+
+        <!-- Module 2 : PROPOSITION BUDGÉTAIRE -->
+        <div class="module-action-card card-devis" onclick="showPortalSection('devis')">
+          <div>
+            <span class="module-badge-tag tag-gold">Module 2</span>
+            <div class="module-card-icon">💼</div>
+            <h3>Proposition Budgétaire</h3>
+            <p>Tarification transparente par phase de développement. Chaque investissement est détaillé avec les livrables inclus.</p>
+            <ul class="module-card-features">
+              <li>Tarifs par phase de développement</li>
+              <li>Détail des livrables par forfait</li>
+              <li>Options de maintenance & hébergement</li>
+              <li>Garanties et engagement qualité</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-devis-action">
+            💼 Consulter la Proposition Budgétaire →
+          </button>
+        </div>
+      </div>
+
+      <!-- Bannière d'accès à la Démo Interactive -->
+      <div class="cover-demo-banner" onclick="showPortalSection('demo')">
+        <div class="banner-demo-text">
+          <h4>🚀 Voir la Démonstration Interactive en Direct</h4>
+          <p>Testez l'application mobile et le tableau de bord pasteur synchronisés en temps réel.</p>
+        </div>
+        <button class="btn-launch-demo">▶ Lancer la Démo</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 1 : ARCHITECTURE & FEUILLE DE ROUTE       -->
+  <!-- ============================================== -->
+  <section id="portal-plan" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+      </div>
+      <div class="portal-page-header">
+        <h2>🏛️ Architecture Globale & Feuille de Route CCPE</h2>
+        <p>Solution intégrée tout-en-un réunissant les 3 phases en une plateforme unique, complète et clé en main pour l'église.</p>
+      </div>
+
+      <!-- CARTE D'ARCHITECTURE UNIQUE (TOUTES LES 3 PHASES RÉUNIES) -->
+      <div class="unified-architecture-card">
+        <div class="unified-arch-header">
+          <div class="unified-arch-badge">
+            <span class="badge-dot blink"></span> SOLUTION GLOBALE TOUT-EN-UN (PHASES 1, 2 & 3 RÉUNIES)
+          </div>
+          <h3>Écosystème Numérique Intégré de l'Église CCPE</h3>
+          <p class="unified-arch-sub">
+            Déploiement complet et coordonné comprenant l'Application Mobile (iOS & Android), le Tableau de Bord Pastoral & Administratif (Web) et l'Assistant IA Spirituel.
+          </p>
+          <div class="unified-arch-stats-row">
+            <div class="arch-stat-badge">📦 <strong>14 Modules Métiers</strong> Intégrés</div>
+            <div class="arch-stat-badge">📱 <strong>Mobile + Web + IA</strong> Synchronisés</div>
+            <div class="arch-stat-badge">⏱ <strong>Livraison Clé en Main</strong> Complète</div>
+            <div class="arch-stat-badge">💡 <strong>Transparence Totale</strong> sur les Coûts & Ressources</div>
+          </div>
+        </div>
+
+        <!-- Les 3 Piliers Réunis dans une Vue Unique -->
+        <div class="unified-pillars-grid">
+          
+          <!-- Pilier 1 : FONDATION & GESTION (Phase 1) -->
+          <div class="arch-pillar-box pillar-1">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-red">Pilier 1 — MVP</span>
+              <h4>Fondation & Lancement</h4>
+              <span class="pillar-time">⏱ Durée : 8 à 10 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <!-- Module 1 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">👥</span>
+                <div>
+                  <strong>Registre des Membres</strong>
+                  <p>Inscription, pointage QR, annuaire avec recherche et filtres par département.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Zéro abonnement externe • Hébergement base de données standard inclus.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 2 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🔔</span>
+                <div>
+                  <strong>Annonces & Push Notifications</strong>
+                  <p>Diffusion ciblée (chorale, jeunesse, général), priorité urgente et historique.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus / Gratuit</span>
+                    Notifications push gratuites et illimitées (Google Firebase FCM). <em>Option : pack SMS payant si SMS opérateur souhaité.</em>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 3 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🙏</span>
+                <div>
+                  <strong>Mur de Prière Interactif</strong>
+                  <p>Demandes publiques et confidentielles, compteur d'intercession, suivi pastoral.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Zéro surcoût • Gestion interne par les modérateurs et le pasteur.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 4 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">💳</span>
+                <div>
+                  <strong>Dîmes & Offrandes Mobile Money</strong>
+                  <p>Wave, Orange Money, MTN MoMo — reçu automatique et suivi trésorerie.</p>
+                  <div class="feature-cost-note cost-warning">
+                    <span class="cost-tag-pill warn">Frais Opérateurs</span>
+                    Commission opérateur standard (env. 1% à 2% prélevés par Wave/OM/MTN par transaction, aucun abonnement fixe).
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 5 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📖</span>
+                <div>
+                  <strong>Bibliothèque Audio & PDF</strong>
+                  <p>Prédications audio, études bibliques PDF, replay cultes avec filtre par catégorie.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Stockage Cloud standard inclus • Aucun abonnement tiers requis.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 6 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🎙️</span>
+                <div>
+                  <strong>Salon Audio de Prière</strong>
+                  <p>Appels audio de groupe (Jitsi Meet), rejoindre une salle de prière en direct.</p>
+                  <div class="feature-cost-note cost-tip">
+                    <span class="cost-tag-pill tip">Astuce Économique</span>
+                    Protocole open-source Jitsi Meet audio léger • Zéro coût d'abonnement pour l'église.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pilier 2 : CROISSANCE & ENGAGEMENT (Phase 2) -->
+          <div class="arch-pillar-box pillar-2">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-gold">Pilier 2 — Croissance</span>
+              <h4>Engagement & Communauté</h4>
+              <span class="pillar-time">⏱ Durée : 6 à 8 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <!-- Module 7 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🎥</span>
+                <div>
+                  <strong>Cultes en Direct (Streaming)</strong>
+                  <p>Intégration YouTube Live / Facebook Live avec chat intégré et compteur de vues.</p>
+                  <div class="feature-cost-note cost-tip">
+                    <span class="cost-tag-pill tip">Recommandation Zéro Coût</span>
+                    Intégration YouTube Live / Facebook Live 100% gratuite (bande passante illimitée). <em>Option serveur CDN privé : abonnement mensuel à prévoir.</em>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 8 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">💬</span>
+                <div>
+                  <strong>Messagerie & Groupes</strong>
+                  <p>Chat individuel et groupes départementaux (chorale, jeunesse, anciens).</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Base de données temps réel sans surcoût d'infrastructure pour l'église.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 9 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📅</span>
+                <div>
+                  <strong>Calendrier & Événements</strong>
+                  <p>Agenda de l'église, inscription aux événements, rappels automatiques.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Rappels push automatiques gratuits sur smartphone.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 10 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🖼️</span>
+                <div>
+                  <strong>Galerie Photos & Vidéos</strong>
+                  <p>Albums organisés par événement, partage et téléchargement.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Stockage et compression automatique d'images inclus dans l'hébergement.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pilier 3 : EXCELLENCE & HAUTE TECHNOLOGIE (Phase 3) -->
+          <div class="arch-pillar-box pillar-3">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag" style="background:#e0e7ff; color:#4338ca;">Pilier 3 — Excellence</span>
+              <h4>Plateforme Complète & Autonome</h4>
+              <span class="pillar-time">⏱ Durée : 8 à 12 semaines</span>
+            </div>
+            <div class="arch-pillar-features">
+              <!-- Module 11 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📹</span>
+                <div>
+                  <strong>Appels Vidéo Privés (WebRTC)</strong>
+                  <p>Visio-conférence interne pour les réunions pastorales et les cellules de maison.</p>
+                  <div class="feature-cost-note cost-warning">
+                    <span class="cost-tag-pill warn">Ressources & Abonnement Vidéo</span>
+                    Nécessite des serveurs de relais vidéo haute bande passante (TURN/STUN ou abonnement Agora/LiveKit) pour la visio de groupe multi-caméras.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 12 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">📊</span>
+                <div>
+                  <strong>Tableau de Bord Avancé</strong>
+                  <p>Statistiques de présence, croissance, analyse financière et rapports automatiques.</p>
+                  <div class="feature-cost-note cost-free">
+                    <span class="cost-tag-pill free">Inclus</span>
+                    Moteur d'analyse de données et export de rapports PDF/Excel inclus.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 13 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🌐</span>
+                <div>
+                  <strong>Multi-paroisses & Réseau</strong>
+                  <p>Gestion centralisée de plusieurs assemblées locales.</p>
+                  <div class="feature-cost-note cost-warning">
+                    <span class="cost-tag-pill warn">Ressources Serveur Cloud</span>
+                    Nécessite un serveur Cloud dimensionné (CPU/RAM renforcés) pour gérer les connexions simultanées de plusieurs paroisses.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Module 14 -->
+              <div class="arch-pillar-feature">
+                <span class="feature-ico">🤖</span>
+                <div>
+                  <strong>Assistant IA Pastoral</strong>
+                  <p>Chatbot spirituel, recherche intelligente dans les prédications.</p>
+                  <div class="feature-cost-note cost-warning">
+                    <span class="cost-tag-pill warn">Abonnement API IA (À l'usage)</span>
+                    Nécessite une clé API IA (OpenAI GPT-4o / Claude / Gemini) facturée selon le volume de questions posées (environ 10 000 à 25 000 FCFA/mois selon l'usage).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="portal-bottom-actions">
+        <button class="btn-card-action btn-devis-action" style="max-width:380px;" onclick="showPortalSection('devis')">💼 Voir la Proposition Budgétaire →</button>
+        <button class="btn-card-action btn-plan-action" style="max-width:380px;" onclick="showPortalSection('demo')">🚀 Voir la Démo en Direct →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE 2 : PROPOSITION BUDGÉTAIRE CCPE           -->
+  <!-- ============================================== -->
+  <section id="portal-devis" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+      </div>
+      <div class="portal-page-header">
+        <h2>💼 Modèle d'Investissement & Infrastructure Cloud CCPE</h2>
+        <p>Présentation transparente de la solution logicielle complète tout-en-un et des coûts d'hébergement serveur Cloud dédié.</p>
+      </div>
+
+      <!-- 1. SOLUTION LOGICIELLE GLOBALE (TOUTES LES 3 PHASES RÉUNIES) -->
+      <div class="unified-architecture-card" style="border-top-color: #b91c1c; margin-bottom: 28px;">
+        <div class="unified-arch-header">
+          <div class="unified-arch-badge">
+            <span class="badge-dot blink"></span> SOLUTION LOGICIELLE GLOBALE (PHASES 1, 2 & 3 RÉUNIES)
+          </div>
+          <h3>Plateforme Numérique Complète & Clé en Main CCPE</h3>
+          <p class="unified-arch-sub">
+            Conception, développement et déploiement coordonné de l'intégralité des 14 modules sans interruption de projet ni surcoût caché.
+          </p>
+          <div class="unified-arch-stats-row">
+            <div class="arch-stat-badge">🎯 <strong>Forfait Global Tout-en-Un</strong> sur Proposition Personnalisée</div>
+            <div class="arch-stat-badge">💳 <strong>Paiement Échelonné</strong> en 3 ou 4 tranches selon accord</div>
+            <div class="arch-stat-badge">🛡️ <strong>Code Source & Données 100% Propriété</strong> de l'Église CCPE</div>
+          </div>
+        </div>
+
+        <!-- Les 3 Piliers de l'Écosystème Inclus -->
+        <div class="unified-pillars-grid">
+          <div class="arch-pillar-box pillar-1">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-red">Pilier 1 — Inclus</span>
+              <h4>Fondation & Gestion</h4>
+              <span class="pillar-time">6 Modules Opérationnels</span>
+            </div>
+            <ul class="pricing-list" style="margin:0;">
+              <li><strong>Application Mobile</strong> (iOS & Android)</li>
+              <li><strong>Tableau de Bord Pasteur</strong> (Web)</li>
+              <li>Registre des Membres + QR Code</li>
+              <li>Annonces & Notifications Push</li>
+              <li>Mur de Prière Interactif</li>
+              <li>Dîmes & Offrandes (Wave, OM, MTN)</li>
+              <li>Bibliothèque Audio & PDF</li>
+              <li>Salon Audio de Prière (Jitsi)</li>
+            </ul>
+          </div>
+
+          <div class="arch-pillar-box pillar-2">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag tag-gold">Pilier 2 — Inclus</span>
+              <h4>Croissance & Communauté</h4>
+              <span class="pillar-time">4 Modules d'Engagement</span>
+            </div>
+            <ul class="pricing-list" style="margin:0;">
+              <li><strong>Cultes en Direct</strong> (YouTube / Facebook Live)</li>
+              <li><strong>Messagerie & Groupes</strong> départementaux</li>
+              <li>Calendrier & Événements interactifs</li>
+              <li>Galerie Photos & Vidéos de l'église</li>
+              <li>Mises à jour et améliorations continues</li>
+              <li>Support technique & accompagnement</li>
+            </ul>
+          </div>
+
+          <div class="arch-pillar-box pillar-3">
+            <div class="arch-pillar-header">
+              <span class="pillar-tag" style="background:#e0e7ff; color:#4338ca;">Pilier 3 — Inclus</span>
+              <h4>Excellence & Autonomie</h4>
+              <span class="pillar-time">4 Modules Haute Technologie</span>
+            </div>
+            <ul class="pricing-list" style="margin:0;">
+              <li><strong>Appels Vidéo Privés</strong> (WebRTC)</li>
+              <li><strong>Tableau de Bord Avancé</strong> & statistiques</li>
+              <li>Multi-paroisses & réseau consolidé</li>
+              <li>Assistant IA Pastoral & Spirituel</li>
+              <li>Formation équipe administrative</li>
+              <li>Support premium & pérennité 12 mois</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. NÉCESSITÉ DU SERVEUR CLOUD DÉDIÉ & GRILLE DES COÛTS DU SERVEUR -->
+      <div class="cloud-server-card">
+        <div class="cloud-server-header">
+          <span class="cloud-badge-tag">☁️ Infrastructure Cloud Dédiée & Sécurisée</span>
+          <h3>Pourquoi l'Église Doit Louer un Serveur Cloud Dédié ?</h3>
+          <p>
+            Pour garantir le fonctionnement continu de l'application 24h/24, protéger la confidentialité pastorale et assurer la haute vitesse des transactions Mobile Money, un serveur Cloud dédié est indispensable.
+          </p>
+        </div>
+
+        <!-- 3 Raisons Fondamentales -->
+        <div class="cloud-reasons-grid">
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">🔒</span>
+            <div>
+              <strong>Sécurité & Confidentialité Pastorale</strong>
+              <p>Chiffrement SSL 256 bits. Les données personnelles des fidèles et les requêtes de prières confidentielles adressées au Pasteur sont isolées et inviolables.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">⚡</span>
+            <div>
+              <strong>Disponibilité 24h/24 & Temps Réel</strong>
+              <p>Permet à des centaines de membres de se connecter simultanément le dimanche sans ralentissement pour le pointage QR, le streaming et les offrandes.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">🛡️</span>
+            <div>
+              <strong>Souveraineté des Données CCPE</strong>
+              <p>Le contrat d'hébergement est ouvert directement au nom officiel de l'Église CCPE. L'assemblée reste 100% propriétaire de ses fichiers et sauvegardes.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grille des Coûts Réels du Serveur Cloud -->
+        <h4 style="text-align:center; font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:16px;">
+          📊 Grille des Coûts d'Hébergement Serveur Cloud (Facturé au coût réel hébergeur)
+        </h4>
+
+        <div class="cloud-pricing-grid">
+          <!-- Option 1 : VPS Cloud Standard -->
+          <div class="cloud-tier-card featured-cloud">
+            <span class="cloud-tier-badge">⭐ Recommandé — Démarrage & Siège</span>
+            <div class="cloud-tier-header">
+              <h4>Serveur Cloud VPS Standard</h4>
+              <small>Dimensionné pour la paroisse siège et jusqu'à 2 500 membres actifs</small>
+            </div>
+            <div class="cloud-price-row">
+              <span class="cloud-price-main">18 500 FCFA</span>
+              <span class="cloud-price-period">/ mois</span>
+            </div>
+            <div class="cloud-price-annual">soit 195 000 FCFA / an (2 mois offerts si engagement annuel)</div>
+            <ul class="cloud-specs-list">
+              <li><strong>Processeur :</strong> 4 vCPU Haute Fréquence</li>
+              <li><strong>Mémoire RAM :</strong> 8 Go RAM dédiée</li>
+              <li><strong>Disque SSD NVMe :</strong> 160 Go (ultra-rapide)</li>
+              <li><strong>Bande Passante :</strong> Trafic mensuel illimité</li>
+              <li><strong>Certificat SSL :</strong> HTTPS sécurisé officiel inclus</li>
+              <li><strong>Sauvegardes Automatiques :</strong> Quotidiennes sécurisées</li>
+              <li><strong>Disponibilité garantie :</strong> 99.9% Uptime 24h/7j</li>
+            </ul>
+            <button class="btn-card-action btn-plan-action" style="background:#0284c7; border:none;" onclick="alert('Option Cloud VPS Standard : Contrat souscrit directement par l\'église auprès du fournisseur Cloud (OVH Cloud / Hostinger).')">
+              ✓ Forfait Serveur Recommandé
+            </button>
+          </div>
+
+          <!-- Option 2 : Serveur Cloud Haute Disponibilité Multi-Paroisses -->
+          <div class="cloud-tier-card">
+            <div class="cloud-tier-header">
+              <h4>Cloud Pro Réseau & Multi-Paroisses</h4>
+              <small>Pour l'extension réseau (Siège + Paroisses régionales + Diaspora) & Streaming</small>
+            </div>
+            <div class="cloud-price-row">
+              <span class="cloud-price-main">38 000 FCFA</span>
+              <span class="cloud-price-period">/ mois</span>
+            </div>
+            <div class="cloud-price-annual">soit 390 000 FCFA / an</div>
+            <ul class="cloud-specs-list">
+              <li><strong>Processeur :</strong> 8 vCPU Performance Pro</li>
+              <li><strong>Mémoire RAM :</strong> 16 Go RAM dédiée</li>
+              <li><strong>Disque SSD NVMe :</strong> 320 Go répliqué</li>
+              <li><strong>CDN Mondial :</strong> Accélération d'accès pour la Diaspora</li>
+              <li><strong>Bande Passante :</strong> Prioritaire 1 Gbps</li>
+              <li><strong>Relais Vidéo & WebRTC :</strong> Haute charge simultanée</li>
+              <li><strong>Sauvegardes Multi-Zones :</strong> Redondance géographique</li>
+            </ul>
+            <button class="btn-card-action btn-devis-action" onclick="alert('Option Cloud Pro : Idéale pour le réseau multi-paroisses consolidé.')">
+              Option Réseau Multi-Sites
+            </button>
+          </div>
+        </div>
+
+        <div class="cloud-notice-bar">
+          <span>💡</span>
+          <div>
+            <strong>Transparence Totale :</strong> Le compte serveur est ouvert au nom exclusif du <em>Centre Chrétien Parole & Esprit</em>. L'église reçoit les factures officielles directement de l'hébergeur Cloud (OVH Cloud / Hostinger / DigitalOcean), garantissant une gestion saine et sans frais intermédiaires.
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. NÉCESSITÉ DU NOM DE DOMAINE OFFICIEL & GRILLE DES VRAIS COÛTS -->
+      <div class="cloud-server-card" style="border-top-color: #f59e0b; margin-top: 28px;">
+        <div class="cloud-server-header">
+          <span class="cloud-badge-tag" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">🌐 Identité Numérique & Nom de Domaine Officiel</span>
+          <h3>Pourquoi l'Église Doit Acheter son Propre Nom de Domaine ?</h3>
+          <p>
+            Le nom de domaine (ex: <code>ccpe.org</code> ou <code>eglise-ccpe.ci</code>) est l'adresse internet officielle et exclusive de l'église. Il est capital pour l'image de marque du ministère, les adresses emails du secrétariat pastoral et la validation auprès de Google, Apple et des opérateurs Mobile Money.
+          </p>
+        </div>
+
+        <!-- 3 Raisons Clés du Nom de Domaine -->
+        <div class="cloud-reasons-grid">
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">🏛️</span>
+            <div>
+              <strong>Crédibilité & Protection de l'Identité CCPE</strong>
+              <p>Évite toute usurpation d'identité ou confusion sur internet. Les fidèles et partenaires savent avec certitude qu'ils naviguent sur la plateforme légitime de l'église.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">📧</span>
+            <div>
+              <strong>Adresses Emails Professionnelles Pastorales</strong>
+              <p>Permet de créer des adresses emails officielles et crédibles (ex: <em>pasteur@ccpe.org</em>, <em>secretariat@ccpe.org</em>, <em>finances@ccpe.org</em>) plutôt que de simples boîtes gratuites grand public.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">📲</span>
+            <div>
+              <strong>Validation Stores & Paiements Mobile Money</strong>
+              <p>Obligatoire pour configurer les certificats de sécurité SSL/HTTPS, valider les comptes de publication sur Google Play & App Store, et certifier les comptes marchands Wave / OM / MTN.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grille des Vrais Coûts du Nom de Domaine -->
+        <h4 style="text-align:center; font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:16px;">
+          🏷️ Grille des Coûts Réels des Noms de Domaine (Facturation annuelle directe registraire)
+        </h4>
+
+        <div class="domain-pricing-grid">
+          <!-- Option 1 : .ORG (Recommandé Églises) -->
+          <div class="domain-tier-card featured-domain">
+            <span class="domain-tier-badge">⭐ Recommandé — Culte & ONG</span>
+            <div class="domain-tier-header">
+              <h4>.ORG <small style="font-size:0.75rem; font-weight:600; color:#b45309;">(ex: ccpe.org)</small></h4>
+              <small>L'extension de référence mondiale pour les églises, ministères et œuvres caritatives</small>
+            </div>
+            <div class="domain-price-row">
+              <span class="domain-price-main">9 500 FCFA</span>
+              <span class="domain-price-period">/ an</span>
+            </div>
+            <ul class="domain-specs-list">
+              <li><strong>Usage :</strong> Idéal pour l'Église & les ministères chrétiens</li>
+              <li><strong>Reconnaissance :</strong> Notoriété et respectabilité internationale</li>
+              <li><strong>Emails :</strong> Jusqu'à 100 comptes emails professionnels</li>
+              <li><strong>Sécurité DNS :</strong> Protection anti-redirection DNSSEC incluse</li>
+              <li><strong>Renouvellement :</strong> Annuel sans hausse abusive</li>
+            </ul>
+            <button class="btn-card-action btn-devis-action" style="padding:10px; font-size:0.8rem;" onclick="alert('Option .ORG recommandée : Enregistré directement au nom du Centre Chrétien Parole & Esprit auprès d\'un bureau d\'enregistrement certifié (OVH / Hostinger / Namecheap).')">
+              ✓ Extension Recommandée CCPE
+            </button>
+          </div>
+
+          <!-- Option 2 : .CI (Côte d'Ivoire) -->
+          <div class="domain-tier-card">
+            <div class="domain-tier-header">
+              <h4>.CI <small style="font-size:0.75rem; font-weight:600; color:#0369a1;">(ex: ccpe.ci)</small></h4>
+              <small>L'extension officielle de la République de Côte d'Ivoire (gérée par le registre national ARTCI)</small>
+            </div>
+            <div class="domain-price-row">
+              <span class="domain-price-main">18 000 FCFA</span>
+              <span class="domain-price-period">/ an</span>
+            </div>
+            <ul class="domain-specs-list">
+              <li><strong>Usage :</strong> Forte identité locale & ancrage national ivoirien</li>
+              <li><strong>Registre :</strong> Autorité officielle ivoirienne (NIC.CI / ARTCI)</li>
+              <li><strong>Référencement :</strong> Priorité dans les recherches Google en Côte d'Ivoire</li>
+              <li><strong>Emails :</strong> Comptes officiels rattachés au domaine national</li>
+              <li><strong>Renouvellement :</strong> Annuel auprès des bureaux agréés</li>
+            </ul>
+            <button class="btn-card-action btn-plan-action" style="padding:10px; font-size:0.8rem; background:#0284c7; border:none;" onclick="alert('Option .CI : Identité locale ivoirienne officielle.')">
+              Option Ancrage National (.CI)
+            </button>
+          </div>
+
+          <!-- Option 3 : .COM (International) -->
+          <div class="domain-tier-card">
+            <div class="domain-tier-header">
+              <h4>.COM <small style="font-size:0.75rem; font-weight:600; color:#475569;">(ex: eglise-ccpe.com)</small></h4>
+              <small>L'extension universelle la plus mémorisable pour le grand public et la diaspora</small>
+            </div>
+            <div class="domain-price-row">
+              <span class="domain-price-main">8 500 FCFA</span>
+              <span class="domain-price-period">/ an</span>
+            </div>
+            <ul class="domain-specs-list">
+              <li><strong>Usage :</strong> Diffusion grand public & Diaspora mondiale</li>
+              <li><strong>Mémorisation :</strong> Extension la plus spontanée pour les fidèles</li>
+              <li><strong>Emails :</strong> Emails simples à retenir pour les membres</li>
+              <li><strong>Protection :</strong> Recommandé en réservation complémentaire</li>
+              <li><strong>Renouvellement :</strong> Annuel au tarif standard mondial</li>
+            </ul>
+            <button class="btn-card-action" style="padding:10px; font-size:0.8rem; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;" onclick="alert('Option .COM : Excellente pour la visibilité internationale.')">
+              Option Grand Public (.COM)
+            </button>
+          </div>
+        </div>
+
+        <div class="cloud-notice-bar" style="border-left: 4px solid #f59e0b;">
+          <span>💡</span>
+          <div>
+            <strong>Propriété Exclusive du Domaine :</strong> Le nom de domaine est réservé avec les coordonnées juridiques officielles du <em>Centre Chrétien Parole & Esprit</em> (et du Pasteur Principal). L'église est l'unique propriétaire légale de son adresse web à vie tant qu'elle règle le renouvellement annuel auprès du registraire (OVH Cloud / Hostinger / Namecheap / ARTCI).
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. NÉCESSITÉ DE L'ASSISTANT IA PASTORAL & MODÈLE DE COÛTS API (À L'USAGE) -->
+      <div class="cloud-server-card" style="border-top-color: #6366f1; margin-top: 28px;">
+        <div class="cloud-server-header">
+          <span class="cloud-badge-tag" style="background:#e0e7ff; color:#4338ca; border:1px solid #c7d2fe;">🤖 Intelligence Artificielle Pastorale & Spirituelle</span>
+          <h3>Pourquoi l'Église Doit-elle Intégrer un Assistant IA Pastoral ?</h3>
+          <p>
+            L'Assistant IA Pastoral constitue un conseiller biblique et spirituel interactif disponible 24h/24 pour édifier les fidèles, rechercher dans les prédications du Pasteur et faciliter la préparation des études bibliques.
+          </p>
+        </div>
+
+        <!-- 3 Raisons Clés de l'Assistant IA -->
+        <div class="cloud-reasons-grid">
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">📖</span>
+            <div>
+              <strong>Accompagnement Spirituel Disponible 24h/24</strong>
+              <p>Répond aux interrogations bibliques des fidèles, propose des versets de réconfort et des plans de prière personnalisés à tout moment, même la nuit.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">🔍</span>
+            <div>
+              <strong>Recherche Intelligente dans les Prédications CCPE</strong>
+              <p>Indexation sémantique des enseignements audio et PDF du Pasteur FIDEL ROMARIC pour retrouver instantanément un extrait ou un message par thème.</p>
+            </div>
+          </div>
+
+          <div class="cloud-reason-item">
+            <span class="cloud-reason-ico">⏱️</span>
+            <div>
+              <strong>Gain de Temps Précieux pour le Corps Pastoral</strong>
+              <p>Assiste les pasteurs, prédicateurs et animateurs de cellules de maison dans la recherche de concordances bibliques et la structuration des exhortations.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grille des Coûts Réels API IA (Facturation à l'Usage) -->
+        <h4 style="text-align:center; font-size:1.15rem; font-weight:800; color:var(--text-main); margin-bottom:16px;">
+          📊 Modèle de Coûts API IA (Facturation à l'Usage Réel — Zéro Abonnement Forcé)
+        </h4>
+
+        <div class="ai-pricing-grid">
+          <!-- Option 1 : Usage Modéré / Démarrage -->
+          <div class="ai-tier-card">
+            <div class="ai-tier-header">
+              <h4>Usage Démarrage <small style="font-size:0.75rem; font-weight:600; color:#475569;">(Cellules & Secrétariat)</small></h4>
+              <small>Pour l'équipe pastorale et les responsables de départements</small>
+            </div>
+            <div class="ai-price-row">
+              <span class="ai-price-main">10 000 FCFA</span>
+              <span class="ai-price-period">/ mois</span>
+            </div>
+            <ul class="ai-specs-list">
+              <li><strong>Volume :</strong> ~1 500 à 2 500 questions bibliques / mois</li>
+              <li><strong>Modèle IA :</strong> OpenAI GPT-4o Mini / Gemini 1.5 Flash</li>
+              <li><strong>Recherche :</strong> Concordances bibliques & versets clés</li>
+              <li><strong>Facturation :</strong> Exacte au nombre de requêtes traitées</li>
+              <li><strong>Plafond :</strong> Blocage automatique anti-surconsommation</li>
+            </ul>
+            <button class="btn-card-action" style="padding:10px; font-size:0.8rem; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1;" onclick="alert('Option Démarrage IA : Idéale pour les besoins internes de l\'équipe pastorale.')">
+              Option Équipe Pastorale
+            </button>
+          </div>
+
+          <!-- Option 2 : Usage Standard Recommandé (Siège & Fidèles) -->
+          <div class="ai-tier-card featured-ai">
+            <span class="ai-tier-badge">⭐ Recommandé — Toute l'Église</span>
+            <div class="ai-tier-header">
+              <h4>Usage Standard Recommandé <small style="font-size:0.75rem; font-weight:600; color:#4338ca;">(Fidèles + Pasteur)</small></h4>
+              <small>Accessible à l'ensemble de l'assemblée sur l'application mobile et web</small>
+            </div>
+            <div class="ai-price-row">
+              <span class="ai-price-main">15 000 à 25 000 FCFA</span>
+              <span class="ai-price-period">/ mois</span>
+            </div>
+            <ul class="ai-specs-list">
+              <li><strong>Volume :</strong> ~4 000 à 8 000 questions bibliques / mois</li>
+              <li><strong>Modèles :</strong> GPT-4o / Claude 3.5 Sonnet / Gemini Pro</li>
+              <li><strong>Prédications CCPE :</strong> Recherche sémantique dans les messages</li>
+              <li><strong>Fidèles :</strong> Méditation guidée et soutien aux nouveaux convertis</li>
+              <li><strong>Contrôle :</strong> Plafond budgétaire mensuel paramétrable</li>
+            </ul>
+            <button class="btn-card-action btn-plan-action" style="padding:10px; font-size:0.8rem; background:#6366f1; border:none;" onclick="alert('Option Standard IA : Accessible à tous les membres sur l\'application smartphone.')">
+              ✓ Formule IA Recommandée
+            </button>
+          </div>
+
+          <!-- Option 3 : Usage Réseau Multi-Paroisses -->
+          <div class="ai-tier-card">
+            <div class="ai-tier-header">
+              <h4>Usage Réseau Pro <small style="font-size:0.75rem; font-weight:600; color:#0369a1;">(Multi-Assemblées)</small></h4>
+              <small>Pour le réseau étendu de paroisses régionales et la diaspora mondiale</small>
+            </div>
+            <div class="ai-price-row">
+              <span class="ai-price-main">35 000 FCFA</span>
+              <span class="ai-price-period">/ mois</span>
+            </div>
+            <ul class="ai-specs-list">
+              <li><strong>Volume :</strong> +15 000 interactions mensuelles haute charge</li>
+              <li><strong>Indexation :</strong> Ensemble des archives audio & manuscrits CCPE</li>
+              <li><strong>Multi-Sites :</strong> Accès unifié pour toutes les paroisses rattachées</li>
+              <li><strong>Génération :</strong> Support à la rédaction des livrets d'études</li>
+              <li><strong>Haute Vitesse :</strong> Temps de réponse prioritaire & sans attente</li>
+            </ul>
+            <button class="btn-card-action btn-devis-action" style="padding:10px; font-size:0.8rem;" onclick="alert('Option Réseau Pro IA : Conçue pour le déploiement multi-paroisses à grande échelle.')">
+              Option Réseau Multi-Paroisses
+            </button>
+          </div>
+        </div>
+
+        <div class="cloud-notice-bar" style="border-left: 4px solid #6366f1;">
+          <span>💡</span>
+          <div>
+            <strong>Plafond Budgétaire Garanti :</strong> L'abonnement API fonctionne sans aucun engagement contraignant. L'église ouvre son compte officiel auprès du fournisseur d'IA (OpenAI, Anthropic ou Google Cloud) et définit un <strong>plafond budgétaire mensuel strict</strong> (ex: fixé à 20 000 FCFA). L'IA s'arrête automatiquement si la limite est atteinte, garantissant un contrôle financier 100% transparent et sans surprise.
+          </div>
+        </div>
+      </div>
+
+      <!-- Garanties -->
+      <div class="quote-guarantees-banner">
+        <div class="guarantee-item">
+          <strong>🔒 Paiement Échelonné & Sécurisé</strong>
+          <p>Règlement en 3 ou 4 tranches progressives selon les jalons de validation pastorale.</p>
+        </div>
+        <div class="guarantee-item">
+          <strong>🛡️ Propriété Totale CCPE</strong>
+          <p>Le code source, les bases de données et les accès serveur appartiennent 100% à l'église.</p>
+        </div>
+        <div class="guarantee-item">
+          <strong>📞 Support & Formation Dédiés</strong>
+          <p>Accompagnement continu, formation des secrétaires et modérateurs, et suivi pastoral direct.</p>
+        </div>
+      </div>
+
+      <div class="portal-bottom-actions">
+        <button class="btn-card-action btn-plan-action" style="max-width:380px;" onclick="showPortalSection('plan')">🏛️ Revoir l'Architecture Complète →</button>
+        <button class="btn-card-action btn-devis-action" style="max-width:380px;" onclick="showPortalSection('demo')">🚀 Lancer la Démo en Direct →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- SECTION DÉMO INTERACTIVE (cachée par défaut)    -->
+  <!-- ============================================== -->
+  <div id="portal-demo" class="portal-section hidden">
+
+  <!-- Notification Toast Synchronisée sur l'écran global -->
+  <div id="system-toast" class="system-toast hidden">
+    <div class="toast-icon">🔔</div>
+    <div class="toast-body">
+      <strong id="toast-title">Notification Push</strong>
+      <p id="toast-message">Message envoyé à l'assemblée</p>
+    </div>
+    <button class="toast-close" onclick="closeToast()">&times;</button>
+  </div>
+
+  <!-- Conteneur Principal de Démo -->
+  <main class="presentation-workspace mode-split" id="workspace">
+
+    <!-- ============================================== -->
+    <!-- SECTION 1 : APPLICATION MOBILE DU FIDÈLE       -->
+    <!-- ============================================== -->
+    <section class="screen-column mobile-column" id="col-mobile">
+      <div class="column-header">
+        <div class="col-title-group">
+          <span class="col-tag">Application Mobile</span>
+          <h2>Ce que chaque membre verra sur son téléphone</h2>
+        </div>
+        <div class="device-controls">
+          <span class="pill-badge">iOS & Android</span>
+        </div>
+      </div>
+
+      <!-- Cadre Téléphone Réaliste -->
+      <div class="phone-wrapper">
+        <div class="phone-mockup">
+          <!-- Dynamic Island / Notch -->
+          <div class="phone-notch">
+            <div class="notch-camera"></div>
+            <div class="notch-speaker"></div>
+          </div>
+
+          <!-- Notification Push Mobile Flottante -->
+          <div id="mobile-push-banner" class="mobile-push-banner hidden">
+            <div class="push-app-icon">
+              <img src="logo.png" alt="CCPE" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+            </div>
+            <div class="push-content">
+              <div class="push-header">
+                <strong>Centre Chrétien Parole & Esprit</strong>
+                <span class="push-time">À l'instant</span>
+              </div>
+              <p id="push-banner-text">Nouvelle annonce du Pasteur disponible</p>
+            </div>
+          </div>
+
+          <!-- Écran du smartphone -->
+          <div class="phone-screen">
+            <!-- Barre d'état smartphone -->
+            <div class="phone-status-bar">
+              <span class="status-time">09:41</span>
+              <div class="status-icons">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.66-1.66-4.34-1.66-6 0z"/></svg>
+                <div class="battery-icon"><div class="battery-level"></div></div>
+              </div>
+            </div>
+
+            <!-- CONTENU DE L'APPLICATION MOBILE -->
+            <div class="mobile-app-content">
+
+              <!-- ================= ONGLET 1 : ACCUEIL ================= -->
+              <div id="mobile-tab-home" class="mobile-tab-pane active">
+                <!-- Branding Église Mobile -->
+                <div class="church-mobile-brand">
+                  <img src="logo.png" alt="Centre Chrétien Parole & Esprit" class="mobile-church-logo">
+                  <div class="mobile-church-texts">
+                    <span class="mobile-church-tag">Plateforme Officielle</span>
+                    <h4 class="mobile-church-title">Centre Chrétien Parole & Esprit</h4>
+                  </div>
+                </div>
+
+                <!-- En-tête membre -->
+                <div class="app-member-header">
+                  <div class="member-greet">
+                    <span class="greet-sub">Bienvenue en communion,</span>
+                    <h3 class="greet-name">Frère DALLE</h3>
+                  </div>
+                  <div class="member-avatar-btn" onclick="switchMobileTab('profile')">
+                    <img src="profile_dalle.png" alt="Frère DALLE">
+                    <span class="online-indicator"></span>
+                  </div>
+                </div>
+
+                <!-- Culte en Direct / Prochain Culte Banner -->
+                <div class="live-service-card">
+                  <div class="live-service-badge">
+                    <span class="badge-dot blink"></span> CULTE DU DIMANCHE EN DIRECT
+                  </div>
+                  <h4>« Entrer dans sa saison de grâce & d'élévation »</h4>
+                  <p class="service-meta" style="display:flex; align-items:center; gap:6px;">
+                    <img src="pasteur_fidel.png" style="width:22px; height:22px; border-radius:50%; object-fit:cover; object-position:center 20%; border:1px solid var(--accent-gold);" alt="Pasteur FIDEL ROMARIC">
+                    <span>Orateur : Pasteur FIDEL ROMARIC • 10h00 - 12h30</span>
+                  </p>
+                  <div class="live-card-actions">
+                    <button class="btn-live-stream" onclick="openLiveModal()">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                      Suivre le Culte
+                    </button>
+                    <span class="viewers-count">👥 248 connectés</span>
+                  </div>
+                </div>
+
+                <!-- Boutons d'accès rapides (Grille des Modules) -->
+                <div class="quick-modules-grid">
+                  <button class="quick-card" onclick="switchMobileTab('prayers')">
+                    <div class="quick-icon icon-amber">🙏</div>
+                    <span class="quick-label">Prières</span>
+                    <span class="quick-counter">12 actives</span>
+                  </button>
+
+                  <button class="quick-card" onclick="openPrayerRoomModal()">
+                    <div class="quick-icon icon-red">🎙️</div>
+                    <span class="quick-label">Salon Audio</span>
+                    <span class="quick-counter">En ligne</span>
+                  </button>
+
+                  <button class="quick-card" onclick="switchMobileTab('donations')">
+                    <div class="quick-icon icon-green">💳</div>
+                    <span class="quick-label">Dons & Dîmes</span>
+                    <span class="quick-counter">Mobile Money</span>
+                  </button>
+
+                  <button class="quick-card" onclick="switchMobileTab('media')">
+                    <div class="quick-icon icon-gold">📖</div>
+                    <span class="quick-label">Enseignements</span>
+                    <span class="quick-counter">Audios & PDF</span>
+                  </button>
+                </div>
+
+                <!-- ================= MODULES PHASE 2 : CROISSANCE & ENGAGEMENT ================= -->
+                <div class="phase-demo-section phase-2-box">
+                  <div class="phase-demo-header">
+                    <span class="badge-phase-tag tag-gold">Phase 2 — Croissance</span>
+                    <span class="phase-demo-subtitle">Communauté & Engagement</span>
+                  </div>
+                  <div class="quick-modules-grid">
+                    <button class="quick-card" onclick="openLiveModal()">
+                      <div class="quick-icon icon-red">🎥</div>
+                      <span class="quick-label">Cultes Live</span>
+                      <span class="quick-counter">Streaming & Chat</span>
+                    </button>
+                    <button class="quick-card" onclick="openMessagingModal()">
+                      <div class="quick-icon icon-blue">💬</div>
+                      <span class="quick-label">Messagerie</span>
+                      <span class="quick-counter">Groupes CCPE</span>
+                    </button>
+                    <button class="quick-card" onclick="openEventsCalendarModal()">
+                      <div class="quick-icon icon-purple">📅</div>
+                      <span class="quick-label">Calendrier</span>
+                      <span class="quick-counter">Événements</span>
+                    </button>
+                    <button class="quick-card" onclick="openGalleryModal()">
+                      <div class="quick-icon icon-green">🖼️</div>
+                      <span class="quick-label">Galerie</span>
+                      <span class="quick-counter">10 Photos de Cultes</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- ================= MODULES PHASE 3 : EXCELLENCE & AUTONOMIE ================= -->
+                <div class="phase-demo-section phase-3-box">
+                  <div class="phase-demo-header">
+                    <span class="badge-phase-tag tag-purple">Phase 3 — Excellence</span>
+                    <span class="phase-demo-subtitle">Haute Technologie & IA</span>
+                  </div>
+                  <div class="quick-modules-grid">
+                    <button class="quick-card" onclick="openVideoCallModal()">
+                      <div class="quick-icon icon-gold">📹</div>
+                      <span class="quick-label">Visio Pastorale</span>
+                      <span class="quick-counter">WebRTC HD</span>
+                    </button>
+                    <button class="quick-card" onclick="openAIAssistantModal()">
+                      <div class="quick-icon icon-cyan">🤖</div>
+                      <span class="quick-label">Assistant IA</span>
+                      <span class="quick-counter">Conseil & Bible</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Verset du Jour Inspirant -->
+                <div class="verse-day-card">
+                  <div class="verse-badge">Verset du Jour</div>
+                  <blockquote class="verse-quote">« Car je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix et non de malheur... »</blockquote>
+                  <cite class="verse-ref">Jérémie 29:11</cite>
+                </div>
+
+                <!-- Annonces Récentes -->
+                <div class="section-title-row">
+                  <h5>Dernières Annonces</h5>
+                  <button class="link-btn" onclick="switchMobileTab('announcements')">Voir tout</button>
+                </div>
+                <div id="mobile-home-announcements-list" class="mini-announcements-list">
+                  <!-- Dynamique via JS -->
+                </div>
+
+                <!-- Prédication Audio Rapide -->
+                <div class="section-title-row">
+                  <h5>Dernier Message Audio</h5>
+                </div>
+                <div class="audio-mini-player">
+                  <button class="play-audio-btn" id="audio-play-btn" onclick="toggleAudioDemo()">
+                    <span id="audio-play-icon">▶</span>
+                  </button>
+                  <div class="audio-info">
+                    <div class="audio-title">La fidélité dans les petites choses</div>
+                    <div class="audio-speaker">Prédication du Dimanche dernier (42 min)</div>
+                    <div class="audio-bar"><div class="audio-progress" id="audio-progress-bar"></div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ================= ONGLET 2 : PRIÈRES EN LIGNE ================= -->
+              <div id="mobile-tab-prayers" class="mobile-tab-pane">
+                <div class="pane-header">
+                  <h3>🙏 Mur d'Intercession</h3>
+                  <p>Partagez vos requêtes et priez les uns pour les autres.</p>
+                </div>
+
+                <!-- Bannière Salon Audio de Prière -->
+                <div class="prayer-room-banner" onclick="openPrayerRoomModal()">
+                  <div class="prayer-room-icon">🎙️</div>
+                  <div class="prayer-room-details">
+                    <strong>Salle de Prière des Sentinelles</strong>
+                    <span>Veillée de prière en direct • 34 frères & sœurs</span>
+                  </div>
+                  <button class="btn-join-room">Rejoindre</button>
+                </div>
+
+                <!-- Bouton Déposer une demande -->
+                <button class="btn-primary-action" onclick="openNewPrayerModal()">
+                  <span>✍️ Déposer un sujet de prière</span>
+                </button>
+
+                <!-- Liste des requêtes de prières -->
+                <div class="prayers-feed" id="mobile-prayers-container">
+                  <!-- Injecté par JavaScript -->
+                </div>
+              </div>
+
+              <!-- ================= ONGLET 3 : MÉDIAS & ENSEIGNEMENTS ================= -->
+              <div id="mobile-tab-media" class="mobile-tab-pane">
+                <div class="pane-header">
+                  <h3>📖 Bibliothèque & Médias</h3>
+                  <p>Replays des cultes, cours bibliques et audios.</p>
+                </div>
+
+                <!-- Filtre média -->
+                <div class="filter-pills">
+                  <button class="pill active" onclick="filterMedia('all', this)">Tous</button>
+                  <button class="pill" onclick="filterMedia('audio', this)">Prédications Audio</button>
+                  <button class="pill" onclick="filterMedia('pdf', this)">Études & PDF</button>
+                  <button class="pill" onclick="filterMedia('video', this)">Replays Vidéo</button>
+                </div>
+
+                <div class="media-list" id="mobile-media-container">
+                  <!-- Injecté par JavaScript -->
+                </div>
+              </div>
+
+              <!-- ================= ONGLET 4 : DONS & DÎMES (MOBILE MONEY) ================= -->
+              <div id="mobile-tab-donations" class="mobile-tab-pane">
+                <div class="pane-header">
+                  <h3>💳 Dîmes & Offrandes</h3>
+                  <p>Soutenez les ministères de l'église en toute sécurité.</p>
+                </div>
+
+                <div class="donation-card-box">
+                  <label class="form-label">Nature de la contribution</label>
+                  <div class="donation-types-grid">
+                    <button class="donation-type-btn active" onclick="selectDonationType('Dîme', this)">Dîme</button>
+                    <button class="donation-type-btn" onclick="selectDonationType('Offrande ordinaire', this)">Offrande</button>
+                    <button class="donation-type-btn" onclick="selectDonationType('Projet Construction', this)">Bâtiment</button>
+                    <button class="donation-type-btn" onclick="selectDonationType('Action Sociale', this)">Social & Évangélisation</button>
+                  </div>
+
+                  <label class="form-label">Montant (FCFA / Dévises)</label>
+                  <div class="amount-presets">
+                    <button class="preset-btn" onclick="setDonationAmount(2000, this)">2 000</button>
+                    <button class="preset-btn active" onclick="setDonationAmount(5000, this)">5 000</button>
+                    <button class="preset-btn" onclick="setDonationAmount(10000, this)">10 000</button>
+                    <button class="preset-btn" onclick="setDonationAmount(25000, this)">25 000</button>
+                  </div>
+                  <input type="number" id="custom-donation-amount" class="input-styled" value="5000" placeholder="Montant personnalisé">
+
+                  <label class="form-label">Sélectionner votre opérateur</label>
+                  <div class="payment-methods-grid">
+                    <label class="method-card active">
+                      <input type="radio" name="paymethod" value="Wave" checked>
+                      <div class="method-content">
+                        <span class="method-tag tag-wave">Wave</span>
+                        <span class="method-name">Wave Money</span>
+                      </div>
+                    </label>
+                    <label class="method-card">
+                      <input type="radio" name="paymethod" value="Orange Money">
+                      <div class="method-content">
+                        <span class="method-tag tag-orange">OM</span>
+                        <span class="method-name">Orange Money</span>
+                      </div>
+                    </label>
+                    <label class="method-card">
+                      <input type="radio" name="paymethod" value="MTN MoMo">
+                      <div class="method-content">
+                        <span class="method-tag tag-mtn">MTN</span>
+                        <span class="method-name">MTN MoMo</span>
+                      </div>
+                    </label>
+                    <label class="method-card">
+                      <input type="radio" name="paymethod" value="Carte Visa/Mastercard">
+                      <div class="method-content">
+                        <span class="method-tag tag-card">CB</span>
+                        <span class="method-name">Carte Bancaire</span>
+                      </div>
+                    </label>
+                  </div>
+
+                  <button class="btn-donate-submit" onclick="executeMobileDonation()">
+                    Confirmer le don sécurisé
+                  </button>
+                  <div class="security-caption">
+                    🔒 Chiffrement SSL 256 bits • Reçu dématérialisé instantané
+                  </div>
+                </div>
+
+                <!-- Historique récent des contributions -->
+                <div class="donation-history-box">
+                  <h5>Mes derniers reçus</h5>
+                  <div class="history-item">
+                    <div>
+                      <strong>Dîme du mois</strong>
+                      <span class="history-date">15 Octobre • Réf #REC-9821</span>
+                    </div>
+                    <span class="history-amount text-success">+ 25 000 FCFA</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ================= ONGLET 5 : ANNONCES & ÉVÉNEMENTS ================= -->
+              <div id="mobile-tab-announcements" class="mobile-tab-pane">
+                <div class="pane-header">
+                  <h3>🔔 Annonces & Agenda</h3>
+                  <p>Toutes les informations officielles de l'église.</p>
+                </div>
+                <div class="announcements-full-list" id="mobile-announcements-container">
+                  <!-- Injecté par JavaScript -->
+                </div>
+              </div>
+
+              <!-- ================= ONGLET 6 : PROFIL MEMBRE ================= -->
+              <div id="mobile-tab-profile" class="mobile-tab-pane">
+                <div class="profile-card-header">
+                  <img src="profile_dalle.png" class="profile-big-avatar" alt="Profil Frère DALLE">
+                  <h4>Frère DALLE</h4>
+                  <span class="member-badge-pill">Membre Baptisé • Actif</span>
+                  <p class="profile-church">Centre Chrétien Parole & Esprit • Paroisse Principale</p>
+                </div>
+
+                <div class="member-qr-badge">
+                  <div class="qr-mockup">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="7" y="7" width="1" height="1"/><rect x="17" y="7" width="1" height="1"/><rect x="7" y="17" width="1" height="1"/>
+                    </svg>
+                  </div>
+                  <div class="qr-info">
+                    <strong>Pass Numérique du Fidèle</strong>
+                    <small>ID: MEM-2024-00892</small>
+                    <p>Pour le pointage le dimanche et les assemblées générales.</p>
+                  </div>
+                </div>
+
+                <div class="profile-details-list">
+                  <div class="profile-row">
+                    <span class="row-label">Téléphone</span>
+                    <span class="row-val">+225 07 48 99 12 34</span>
+                  </div>
+                  <div class="profile-row">
+                    <span class="row-label">Département</span>
+                    <span class="row-val">Chorale & Louange</span>
+                  </div>
+                  <div class="profile-row">
+                    <span class="row-label">Date d'adhésion</span>
+                    <span class="row-val">12 Mars 2021</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Barre de navigation inférieure Smartphone -->
+            <nav class="phone-bottom-nav">
+              <button class="nav-tab-btn active" data-tab="home" onclick="switchMobileTab('home')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Accueil</span>
+              </button>
+              <button class="nav-tab-btn" data-tab="prayers" onclick="switchMobileTab('prayers')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Prières</span>
+              </button>
+              <button class="nav-tab-btn" data-tab="donations" onclick="switchMobileTab('donations')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                <span>Dons</span>
+              </button>
+              <button class="nav-tab-btn" data-tab="announcements" onclick="switchMobileTab('announcements')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span>Annonces</span>
+              </button>
+              <button class="nav-tab-btn" data-tab="profile" onclick="switchMobileTab('profile')">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Profil</span>
+              </button>
+            </nav>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 2 : TABLEAU DE BORD PASTEUR & SECRÉT.  -->
+    <!-- ============================================== -->
+    <section class="screen-column admin-column" id="col-admin">
+      <div class="column-header">
+        <div class="admin-church-brand">
+          <img src="logo.png" alt="Centre Chrétien Parole & Esprit" class="admin-header-logo">
+          <div class="col-title-group">
+            <span class="col-tag tag-purple">Panneau Pastoral & Administratif</span>
+            <h2>Centre Chrétien Parole & Esprit</h2>
+          </div>
+        </div>
+        <div class="admin-user-pill" onclick="openPastorProfileModal()" title="Cliquer pour voir le profil du Pasteur">
+          <img src="pasteur_fidel.png" alt="Pasteur FIDEL ROMARIC" class="user-avatar-sm-img">
+          <div class="user-meta-sm">
+            <span class="user-name-sm">Pasteur FIDEL ROMARIC</span>
+            <span class="user-role-sm">Administrateur Principal</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Shell -->
+      <div class="admin-shell">
+
+        <!-- Sous-navigation onglets Admin -->
+        <div class="admin-tabs-bar">
+          <button class="admin-tab-btn active" onclick="switchAdminTab('registry')">
+            👥 Registre (<span id="admin-members-count">4</span>)
+          </button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('broadcast')">
+            📢 Diffusion Push
+          </button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('prayers')">
+            🙏 Prières & Suivi
+          </button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('finances')">
+            💰 Trésorerie
+          </button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('analytics')">
+            📊 Analytics & Croissance <span class="badge-tab-p3">P3</span>
+          </button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('ai-assistant')">
+            🤖 IA Pastorale & Études <span class="badge-tab-p3">P3</span>
+          </button>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="admin-kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-icon icon-blue">👥</div>
+            <div class="kpi-data">
+              <span class="kpi-label">Fidèles Recensés</span>
+              <strong class="kpi-value" id="kpi-total-members">542</strong>
+              <small class="kpi-trend text-success">↑ +24 ce mois</small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-amber">🙏</div>
+            <div class="kpi-data">
+              <span class="kpi-label">Sujets de Prière</span>
+              <strong class="kpi-value" id="kpi-total-prayers">18</strong>
+              <small class="kpi-trend text-amber">3 confidentiels</small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-green">💰</div>
+            <div class="kpi-data">
+              <span class="kpi-label">Dons ce Mois</span>
+              <strong class="kpi-value" id="kpi-total-funds">1 485 000 F</strong>
+              <small class="kpi-trend text-success">Wave / OM / CB</small>
+            </div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-icon icon-purple">📱</div>
+            <div class="kpi-data">
+              <span class="kpi-label">Taux d'Ouverture Push</span>
+              <strong class="kpi-value">94.8%</strong>
+              <small class="kpi-trend text-success">Immédiat</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- CONTENU DES ONGLETS ADMIN -->
+
+        <!-- 1. REGISTRE DES MEMBRES -->
+        <div id="admin-tab-registry" class="admin-content-pane active">
+          <div class="pane-action-bar">
+            <div class="search-box">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input type="text" id="member-search-input" placeholder="Rechercher par nom, téléphone ou ministère..." oninput="filterMembersTable()">
+            </div>
+            <div class="action-buttons-group">
+              <select id="department-filter" class="select-styled" onchange="filterMembersTable()">
+                <option value="all">Tous les ministères</option>
+                <option value="Chorale">Chorale & Louange</option>
+                <option value="Jeunesse">Jeunesse Connectée</option>
+                <option value="Accueil">Accueil & Protocole</option>
+                <option value="Intercession">Intercession</option>
+                <option value="Diaconat">Diaconat</option>
+              </select>
+              <button class="btn-primary" onclick="openAddMemberModal()">
+                <span>➕ Ajouter un Membre</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table des Membres -->
+          <div class="table-container">
+            <table class="styled-table" id="members-table">
+              <thead>
+                <tr>
+                  <th>Fidèle</th>
+                  <th>Téléphone</th>
+                  <th>Ministère / Département</th>
+                  <th>Statut</th>
+                  <th>Adhésion</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="members-table-body">
+                <!-- Rempli par JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 2. DIFFUSION D'ANNONCES & PUSH NOTIFICATION -->
+        <div id="admin-tab-broadcast" class="admin-content-pane">
+          <div class="broadcast-layout">
+            <div class="broadcast-form-box">
+              <h3>Rédiger une Annonce & Envoyer la Notification Push</h3>
+              <p class="subtitle">La notification s'affichera directement sur le smartphone de démo ci-contre !</p>
+
+              <form id="broadcast-form" onsubmit="handleSendBroadcast(event)">
+                <div class="form-group">
+                  <label class="form-label">Titre de l'annonce</label>
+                  <input type="text" id="broadcast-title" class="input-styled" required placeholder="Ex: Grande Veillée de Prière ce Vendredi">
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label">Cible de la diffusion</label>
+                    <select id="broadcast-target" class="select-styled">
+                      <option value="Tous les fidèles">Toute l'assemblée (Générale)</option>
+                      <option value="Jeunesse">Jeunesse uniquement</option>
+                      <option value="Chorale">Chorale & Louange</option>
+                      <option value="Responsables">Corps Pastoral & Diacres</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Priorité</label>
+                    <select id="broadcast-priority" class="select-styled">
+                      <option value="urgent">🔴 Alerte Urgente</option>
+                      <option value="normal" selected>🔵 Information Normale</option>
+                      <option value="event">📅 Événement Culte</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label">Message détaillé</label>
+                  <textarea id="broadcast-message" class="textarea-styled" rows="4" required placeholder="Pasteur, expliquez l'événement, les horaires et les instructions pour le peuple de Dieu..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-broadcast-submit">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                  <span>Diffuser l'Annonce & Envoyer la Notification Push</span>
+                </button>
+              </form>
+            </div>
+
+            <!-- Historique des annonces publiées -->
+            <div class="broadcast-history-box">
+              <h4>Historique des annonces actives</h4>
+              <div class="history-list" id="admin-broadcast-history">
+                <!-- Dynamique via JS -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. DEMANDES DE PRIÈRE & SUIVI PASTORAL -->
+        <div id="admin-tab-prayers" class="admin-content-pane">
+          <div class="pastoral-prayers-box">
+            <div class="pane-action-bar">
+              <div>
+                <h3>Sujets de Prière & Confidences Pastorales</h3>
+                <p>Veillez sur les besoins de l'assemblée et répondez aux fidèles.</p>
+              </div>
+            </div>
+            <div class="pastoral-prayers-list" id="admin-prayers-container">
+              <!-- Dynamique via JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. TRÉSORERIE & DONS -->
+        <div id="admin-tab-finances" class="admin-content-pane">
+          <div class="finances-dashboard">
+            <div class="finances-summary">
+              <h3>Suivi Transparent des Contributions Numériques</h3>
+              <p>Rapprochement automatique des versements Mobile Money (Wave, Orange, MTN) et Carte bancaire.</p>
+            </div>
+
+            <div class="table-container">
+              <table class="styled-table">
+                <thead>
+                  <tr>
+                    <th>Réf Transaction</th>
+                    <th>Fidèle</th>
+                    <th>Type de Don</th>
+                    <th>Opérateur</th>
+                    <th>Montant</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-finances-table-body">
+                  <!-- Dynamique via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. ANALYTICS & CROISSANCE (PHASE 3) -->
+        <div id="admin-tab-analytics" class="admin-content-pane">
+          <div class="analytics-dashboard-wrap">
+            <div class="finances-summary">
+              <h3>📊 Intelligence Pastorale & Analyse de Croissance (Phase 3)</h3>
+              <p>Indicateurs en temps réel sur la vie spirituelle, l'engagement et la santé financière de l'assemblée.</p>
+            </div>
+
+            <div class="analytics-cards-row">
+              <div class="analytics-card">
+                <h5>Présence Moyenne aux Cultes</h5>
+                <div class="stat-num" id="an-presence">520</div>
+                <small class="text-success">↑ +14.2% ce trimestre</small>
+              </div>
+              <div class="analytics-card">
+                <h5>Fidélisation Nouveaux Convertis</h5>
+                <div class="stat-num" id="an-retention">84.5%</div>
+                <small class="text-success">68 âmes intégrées</small>
+              </div>
+              <div class="analytics-card">
+                <h5>Membres Connectés App</h5>
+                <div class="stat-num" id="an-active-app">412</div>
+                <small class="text-success">76% de pénétration</small>
+              </div>
+              <div class="analytics-card">
+                <h5>Fonds Dématérialisés</h5>
+                <div class="stat-num" id="an-digital-funds">91.8%</div>
+                <small class="text-success">Wave / OM prioritaires</small>
+              </div>
+            </div>
+
+            <div class="analytics-charts-grid">
+              <!-- Graphique de Croissance 6 Mois -->
+              <div class="chart-panel">
+                <h4>📈 Évolution de la Fréquentation (Derniers 6 mois)</h4>
+                <div class="bars-container">
+                  <div class="bar-col">
+                    <span class="bar-val">340</span>
+                    <div class="bar-fill" style="height: 65px;"></div>
+                    <span class="bar-label">Mai</span>
+                  </div>
+                  <div class="bar-col">
+                    <span class="bar-val">380</span>
+                    <div class="bar-fill" style="height: 75px;"></div>
+                    <span class="bar-label">Juin</span>
+                  </div>
+                  <div class="bar-col">
+                    <span class="bar-val">415</span>
+                    <div class="bar-fill" style="height: 85px;"></div>
+                    <span class="bar-label">Juil</span>
+                  </div>
+                  <div class="bar-col">
+                    <span class="bar-val">460</span>
+                    <div class="bar-fill" style="height: 100px;"></div>
+                    <span class="bar-label">Août</span>
+                  </div>
+                  <div class="bar-col">
+                    <span class="bar-val">495</span>
+                    <div class="bar-fill" style="height: 115px;"></div>
+                    <span class="bar-label">Sept</span>
+                  </div>
+                  <div class="bar-col">
+                    <span class="bar-val">542</span>
+                    <div class="bar-fill" style="height: 130px; background: linear-gradient(180deg, #10b981, #059669);"></div>
+                    <span class="bar-label">Oct</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Répartition des Canaux de Dons -->
+              <div class="chart-panel">
+                <h4>💳 Répartition des Paiements Numériques</h4>
+                <div class="progress-stats-list">
+                  <div class="prog-item">
+                    <div class="prog-header"><span>Wave Money (Sans frais)</span><span>58%</span></div>
+                    <div class="prog-bar"><div class="prog-fill wave" style="width: 58%;"></div></div>
+                  </div>
+                  <div class="prog-item">
+                    <div class="prog-header"><span>Orange Money</span><span>26%</span></div>
+                    <div class="prog-bar"><div class="prog-fill om" style="width: 26%;"></div></div>
+                  </div>
+                  <div class="prog-item">
+                    <div class="prog-header"><span>MTN MoMo</span><span>11%</span></div>
+                    <div class="prog-bar"><div class="prog-fill mtn" style="width: 11%;"></div></div>
+                  </div>
+                  <div class="prog-item">
+                    <div class="prog-header"><span>Carte Visa / Diaspora</span><span>5%</span></div>
+                    <div class="prog-bar"><div class="prog-fill card" style="width: 5%;"></div></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="export-report-banner">
+              <div>
+                <h4>📑 Rapport Pastoral & Financier Mensuel</h4>
+                <p>Générez en un clic la synthèse pour le Conseil Pastoral et les Commissaires aux Comptes.</p>
+              </div>
+              <button class="btn-primary" onclick="alert('Export PDF généré avec succès ! Le document officiel est prêt pour le Pasteur FIDEL ROMARIC.')">
+                📥 Exporter le Rapport PDF Officiel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. ASSISTANT IA PASTORAL & ÉTUDES (PHASE 3) -->
+        <div id="admin-tab-ai-assistant" class="admin-content-pane">
+          <div class="ai-assistant-box">
+            <div class="ai-assistant-header">
+              <div class="ai-avatar-icon">🤖</div>
+              <div>
+                <strong>Assistant Pastoral IA & Recherche Théologique</strong>
+                <small style="opacity: 0.8; display: block;">Modèle entraîné sur les enseignements bibliques et archives CCPE</small>
+              </div>
+            </div>
+
+            <div class="ai-messages-list" id="admin-ai-messages-list">
+              <div class="ai-msg bot">
+                Shalom Pasteur FIDEL ROMARIC ! Je suis votre assistant ministériel IA. Je peux vous aider à préparer les plans d'enseignements, analyser les tendances des besoins de prière de vos fidèles, ou rechercher dans vos prédications passées. Que désirez-vous explorer aujourd'hui ?
+              </div>
+            </div>
+
+            <div class="ai-suggestions-row">
+              <button class="ai-suggestion-chip" onclick="askAdminAI('Quels sont les thèmes de prière les plus fréquents ce mois ?')">📊 Analyse des besoins spirituels</button>
+              <button class="ai-suggestion-chip" onclick="askAdminAI('Propose un plan d\'enseignement sur la persévérance dans l\'épreuve')">📖 Plan de prédication</button>
+              <button class="ai-suggestion-chip" onclick="askAdminAI('Rédige un message pastoral d\'encouragement pour la jeunesse')">✍️ Message d\'édification</button>
+            </div>
+
+            <form class="ai-input-form" onsubmit="handleAdminAISubmit(event)">
+              <input type="text" id="admin-ai-input" placeholder="Posez une question doctrinale ou demandez un résumé..." required>
+              <button type="submit" class="btn-send-ai">Interroger l'IA</button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================== -->
+  <!-- MODALS DE DÉMONSTRATION INTERACTIVE            -->
+  <!-- ============================================== -->
+
+  <!-- Modal 1 : Nouveau Membre (Admin) -->
+  <div id="modal-add-member" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Fiche d'Inscription Nouveau Membre</h3>
+        <button class="modal-close" onclick="closeModal('modal-add-member')">&times;</button>
+      </div>
+      <form id="form-new-member" onsubmit="handleAddNewMember(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nom de famille</label>
+            <input type="text" id="new-member-lastname" class="input-styled" required placeholder="Ex: Kouassi">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Prénoms</label>
+            <input type="text" id="new-member-firstname" class="input-styled" required placeholder="Ex: Marie-Esther">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Numéro de téléphone</label>
+            <input type="tel" id="new-member-phone" class="input-styled" required placeholder="+225 05 00 11 22 33">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Département / Ministère</label>
+            <select id="new-member-dept" class="select-styled">
+              <option value="Chorale">Chorale & Louange</option>
+              <option value="Accueil">Accueil & Protocole</option>
+              <option value="Jeunesse">Jeunesse Connectée</option>
+              <option value="Intercession">Intercession</option>
+              <option value="Diaconat">Diaconat</option>
+              <option value="Écodim">Moniteur Enfants</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Adresse / Quartier de résidence</label>
+          <input type="text" id="new-member-address" class="input-styled" placeholder="Ex: Cocody Angré, Rue L14">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-add-member')">Annuler</button>
+          <button type="submit" class="btn-primary">Enregistrer au Registre Officiel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2 : Salon Audio de Prière (Simulation WebRTC) -->
+  <div id="modal-prayer-room" class="modal-overlay hidden">
+    <div class="modal-card modal-voice-room">
+      <div class="modal-header">
+        <div class="room-title">
+          <span class="live-pill">EN DIRECT</span>
+          <h3>🎙️ Salon d'Intercession des Sentinelles</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-prayer-room')">&times;</button>
+      </div>
+      <div class="voice-participants-grid">
+        <div class="voice-card active-speaker">
+          <div class="voice-avatar">
+            <img src="pasteur_fidel.png" alt="Pasteur FIDEL ROMARIC" style="object-position: center 20%;">
+            <div class="sound-wave-ring"></div>
+          </div>
+          <span class="voice-name">Pasteur FIDEL ROMARIC</span>
+          <span class="voice-status speaking">En train de prier...</span>
+        </div>
+        <div class="voice-card">
+          <div class="voice-avatar">
+            <img src="profile_dalle.png" alt="Frère DALLE">
+          </div>
+          <span class="voice-name">Vous (Frère DALLE)</span>
+          <span class="voice-status">Micro coupé</span>
+        </div>
+        <div class="voice-card">
+          <div class="voice-avatar">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=faces" alt="Soeur Grace">
+          </div>
+          <span class="voice-name">Sœur Grace</span>
+          <span class="voice-status">En écoute</span>
+        </div>
+        <div class="voice-card">
+          <div class="voice-avatar">
+            <div class="avatar-placeholder">+31</div>
+          </div>
+          <span class="voice-name">Autres fidèles</span>
+          <span class="voice-status">En ligne</span>
+        </div>
+      </div>
+      <div class="voice-controls">
+        <button class="voice-btn mute-btn" id="btn-toggle-mic" onclick="toggleMicDemo()">
+          <span id="mic-icon">🔇</span> <span id="mic-label">Activer mon micro</span>
+        </button>
+        <button class="voice-btn amen-btn" onclick="sendAmenReaction()">
+          🙌 Dire Amen !
+        </button>
+        <button class="voice-btn leave-btn" onclick="closeModal('modal-prayer-room')">
+          Quitter la salle
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3 : Nouveau Sujet de Prière (Membre) -->
+  <div id="modal-new-prayer" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>Déposer une Requête de Prière</h3>
+        <button class="modal-close" onclick="closeModal('modal-new-prayer')">&times;</button>
+      </div>
+      <form id="form-new-prayer" onsubmit="handleAddNewPrayer(event)">
+        <div class="form-group">
+          <label class="form-label">Objet de la prière</label>
+          <input type="text" id="new-prayer-title" class="input-styled" required placeholder="Ex: Guérison divine pour ma mère">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Détails de la demande</label>
+          <textarea id="new-prayer-desc" class="textarea-styled" rows="3" required placeholder="Partagez avec foi votre besoin..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="checkbox-label">
+            <input type="checkbox" id="new-prayer-confidential">
+            <span>🔒 Requête <strong>confidentielle</strong> (Visible uniquement par le Pasteur)</span>
+          </label>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal('modal-new-prayer')">Annuler</button>
+          <button type="submit" class="btn-primary">Publier la Requête</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4 : Reçu de Don Numérique Mobile Money -->
+  <div id="modal-donation-receipt" class="modal-overlay hidden">
+    <div class="modal-card receipt-card">
+      <div class="receipt-badge-success">✓ PAIEMENT RÉUSSI</div>
+      <img src="logo.png" alt="CCPE" style="width:64px; height:64px; object-fit:cover; border-radius:12px; margin: 10px auto; display:block; border: 2px solid var(--accent-gold); box-shadow:0 4px 12px rgba(0,0,0,0.15);">
+      <h3>Reçu Officiel de Contribution</h3>
+      <p class="receipt-sub">Centre Chrétien Parole & Esprit • Siège</p>
+      
+      <div class="receipt-box">
+        <div class="receipt-row">
+          <span>Donateur</span>
+          <strong id="receipt-donor">Frère DALLE</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Nature du don</span>
+          <strong id="receipt-type">Dîme</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Opérateur de paiement</span>
+          <strong id="receipt-method">Wave Money</strong>
+        </div>
+        <div class="receipt-row">
+          <span>Référence Transaction</span>
+          <strong id="receipt-ref">TX-77491-WV</strong>
+        </div>
+        <div class="receipt-row receipt-total">
+          <span>Montant versé</span>
+          <span class="total-val" id="receipt-amount">5 000 FCFA</span>
+        </div>
+      </div>
+
+      <p class="verse-receipt">« Que chacun donne comme il l'a résolu en son cœur, sans tristesse ni contrainte; car Dieu aime celui qui donne avec joie. » (2 Cor 9:7)</p>
+
+      <div class="modal-footer">
+        <button class="btn-secondary" onclick="closeModal('modal-donation-receipt')">Fermer</button>
+        <button class="btn-primary" onclick="alert('Le reçu a été enregistré dans votre historique.'); closeModal('modal-donation-receipt');">Télécharger le Reçu PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 5 : Guide de Présentation pour le Pasteur -->
+  <div id="modal-guide" class="modal-overlay hidden">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h3>💡 Guide pour votre Entretien avec le Pasteur</h3>
+        <button class="modal-close" onclick="closeModal('modal-guide')">&times;</button>
+      </div>
+      <div class="guide-body">
+        <h4>1. Comment lui présenter cette maquette interactive :</h4>
+        <ul>
+          <li><strong>Montrez la synchronisation en direct</strong> : Publiez une annonce dans l'espace Pasteur à droite, et montrez-lui comment elle fait instantanément sonner une notification push sur le smartphone du fidèle à gauche !</li>
+          <li><strong>Soulignez le recensement</strong> : Montrez le module « Registre des Membres » qui centralise toute l'église avec recherche instantanée.</li>
+          <li><strong>Rassurez-le sur les finances</strong> : Montrez la démonstration de paiement par Mobile Money (Wave, Orange, MTN) avec délivrance automatique de reçu.</li>
+        </ul>
+
+        <h4>2. La réponse à lui donner sur la visio/audio :</h4>
+        <p><em>« Pasteur, nous avons prévu le salon de prière audio (testez le bouton "Salon Audio" sur le téléphone). Pour la Version 1, nous utilisons un moteur prêt à l'emploi (Jitsi) sans surcoût. Dès que l'église aura rentabilisé l'application, nous pourrons passer aux appels vidéo directs type WhatsApp. »</em></p>
+
+        <h4>3. Documents joints créés dans votre dossier :</h4>
+        <ul>
+          <li><code>PROPOSITION_PROJET_ECOSYSTEME_EGLISE.md</code> : Proposition commerciale prête à imprimer.</li>
+          <li><code>ARCHITECTURE_TECHNIQUE.md</code> : Spécifications techniques et sécurité.</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeModal('modal-guide')">J'ai compris, revenir à la démo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 6 : Profil du Pasteur FIDEL ROMARIC -->
+  <div id="modal-pastor-profile" class="modal-overlay hidden">
+    <div class="modal-card modal-pastor-card">
+      <div class="modal-header">
+        <h3>Profil Pastoral & Ministère</h3>
+        <button class="modal-close" onclick="closeModal('modal-pastor-profile')">&times;</button>
+      </div>
+      <div class="pastor-modal-body">
+        <div class="pastor-banner-box">
+          <img src="pasteur_fidel.png" alt="Pasteur FIDEL ROMARIC" class="pastor-big-photo">
+          <div class="pastor-badge-role">Visionnaire & Berger Principal</div>
+        </div>
+        <div class="pastor-info-content">
+          <h4>Pasteur FIDEL ROMARIC</h4>
+          <p class="pastor-church-title">Centre Chrétien Parole & Esprit (CCPE)</p>
+          <div class="pastor-bio-quote">
+            « Prêcher la Parole vivante avec puissance et démontrer l'action du Saint-Esprit pour l'affranchissement et l'édification du peuple de Dieu. »
+          </div>
+          <div class="pastor-attributes-grid">
+            <div class="pastor-attr-item">
+              <span class="attr-icon">📖</span>
+              <div>
+                <strong>Ministère</strong>
+                <small>Enseignement Biblique & Prédication de Réveil</small>
+              </div>
+            </div>
+            <div class="pastor-attr-item">
+              <span class="attr-icon">🏛️</span>
+              <div>
+                <strong>Charge Pastorale</strong>
+                <small>Direction Pastorale & Conseil des Anciens</small>
+              </div>
+            </div>
+            <div class="pastor-attr-item">
+              <span class="attr-icon">📞</span>
+              <div>
+                <strong>Ligne Pastorale Dédiée</strong>
+                <small>Suivi Pastoral & Entretiens Confidentiels</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeModal('modal-pastor-profile')">Fermer la fiche</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODALS DE PHASE 2 & PHASE 3                             -->
+  <!-- ======================================================== -->
+
+  <!-- Modal 7 (Phase 2) : Culte en Direct (Streaming & Chat) -->
+  <div id="modal-live-stream" class="modal-overlay hidden">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span class="live-indicator-pill">🔴 EN DIRECT</span>
+          <h3>Culte du Dimanche en Streaming</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-live-stream')">&times;</button>
+      </div>
+
+      <div class="modal-live-layout">
+        <!-- Lecteur Vidéo simulé -->
+        <div class="video-player-mockup">
+          <div class="video-screen-simulated">
+            <div class="video-live-overlay">
+              <span class="live-indicator-pill">● DIRECT HD</span>
+              <span class="live-viewers-pill">👥 348 fidèles en ligne</span>
+            </div>
+            <div class="video-play-center" onclick="showToast('▶ Flux Actif', 'Diffusion synchronisée YouTube Live / Facebook Live.')">
+              ▶
+            </div>
+          </div>
+          <div class="video-bottom-bar">
+            <div class="video-info-title">
+              <strong>« Entrer dans sa saison de grâce & d'élévation »</strong>
+              <small>Orateur : Pasteur FIDEL ROMARIC • Culte Principal</small>
+            </div>
+            <div class="video-quick-reactions">
+              <button class="btn-react-pill" onclick="sendLiveStreamReaction('Amen ! 🙌')">🙌 Amen</button>
+              <button class="btn-react-pill" onclick="sendLiveStreamReaction('Alléluia ! 🔥')">🔥 Alléluia</button>
+              <button class="btn-react-pill" onclick="closeModal('modal-live-stream'); switchMobileTab('donations'); showToast('💳 Dîmes & Offrandes', 'Accès direct au paiement Mobile Money pendant le culte.');">💳 Donner</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chat en Direct des Fidèles -->
+        <div class="live-chat-panel">
+          <div class="chat-panel-header">
+            <span>💬 Chat des Fidèles en Direct</span>
+            <small style="color:#10b981;">Modération active</small>
+          </div>
+          <div class="chat-messages-scroll" id="live-chat-scroll">
+            <div class="chat-msg-row"><strong class="chat-msg-author gold">Sœur Marie-Esther :</strong> Amen ! Que Dieu bénisse le Pasteur pour cette puissante parole ! 🙌</div>
+            <div class="chat-msg-row"><strong class="chat-msg-author blue">Frère Jean-Eudes :</strong> La présence de Dieu est réelle ce matin depuis Abidjan. 🔥</div>
+            <div class="chat-msg-row"><strong class="chat-msg-author green">Diacre Kouassi :</strong> Gloire à Jésus ! Que les cœurs soient restaurés.</div>
+            <div class="chat-msg-row"><strong class="chat-msg-author purple">Sœur Grace A. :</strong> Toute la famille est connectée et bénie ! 🙏</div>
+          </div>
+          <form class="chat-input-bar" onsubmit="handleSendLiveChatMessage(event)">
+            <input type="text" id="live-chat-input" placeholder="Partagez un message ou un Amen..." required>
+            <button type="submit" class="btn-send-chat">Envoyer</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top:14px;">
+        <button class="btn-secondary" onclick="closeModal('modal-live-stream')">Fermer la diffusion</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 8 (Phase 2) : Messagerie & Groupes Départementaux -->
+  <div id="modal-messaging" class="modal-overlay hidden">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">💬</span>
+          <h3>Messagerie Intégrée & Groupes CCPE (Phase 2)</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-messaging')">&times;</button>
+      </div>
+
+      <div class="messaging-layout">
+        <!-- Sidebar des Canaux -->
+        <div class="channels-sidebar">
+          <div class="channels-title">Groupes & Échanges</div>
+          <div class="channel-item active" onclick="switchChatChannel('chorale', this)">
+            <span>🎵</span>
+            <span>Chorale & Louange</span>
+            <span class="channel-badge">2</span>
+          </div>
+          <div class="channel-item" onclick="switchChatChannel('jeunesse', this)">
+            <span>⚡</span>
+            <span>Jeunesse Connectée</span>
+            <span class="channel-badge">5</span>
+          </div>
+          <div class="channel-item" onclick="switchChatChannel('anciens', this)">
+            <span>🏛️</span>
+            <span>Conseil des Anciens</span>
+          </div>
+          <div class="channel-item" onclick="switchChatChannel('pastor', this)">
+            <span>⭐</span>
+            <span>Pasteur FIDEL (Direct)</span>
+          </div>
+        </div>
+
+        <!-- Zone de Conversation Active -->
+        <div class="channel-chat-area">
+          <div class="channel-chat-header">
+            <div>
+              <h4 id="active-channel-title">🎵 Chorale & Louange CCPE</h4>
+              <small id="active-channel-sub">48 membres • Répétition ce samedi</small>
+            </div>
+            <span style="font-size:0.75rem; color:#10b981; font-weight:600;">● Actif</span>
+          </div>
+
+          <div class="messages-history" id="channel-messages-history">
+            <div class="chat-bubble received">
+              <span class="chat-bubble-sender">Chef de Chœur Emmanuel</span>
+              Bien-aimés, n'oubliez pas notre répétition générale ce samedi à 15h00 au Sanctuaire pour le culte spécial.
+              <span class="chat-bubble-time">10:14</span>
+            </div>
+            <div class="chat-bubble received">
+              <span class="chat-bubble-sender">Sœur Grace</span>
+              Parfait frère Emmanuel ! Nous répéterons aussi le nouveau cantique d'action de grâce.
+              <span class="chat-bubble-time">10:18</span>
+            </div>
+            <div class="chat-bubble sent">
+              <span class="chat-bubble-sender">Vous (Frère DALLE)</span>
+              Je serai présent à 14h45 pour installer les micros. Que Dieu vous bénisse !
+              <span class="chat-bubble-time">10:22</span>
+            </div>
+          </div>
+
+          <form class="message-composer" onsubmit="handleSendChannelMessage(event)">
+            <input type="text" id="channel-message-input" placeholder="Écrire un message au groupe..." required>
+            <button type="submit" class="btn-primary" style="padding: 6px 16px;">Envoyer</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top:12px;">
+        <button class="btn-secondary" onclick="closeModal('modal-messaging')">Fermer la messagerie</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 9 (Phase 2) : Calendrier & Événements -->
+  <div id="modal-events-calendar" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">📅</span>
+          <h3>Calendrier des Événements CCPE (Phase 2)</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-events-calendar')">&times;</button>
+      </div>
+
+      <div class="events-list-grid">
+        <!-- Événement 1 -->
+        <div class="event-item-card">
+          <div class="event-date-box">
+            <span class="day">24</span>
+            <span class="month">Oct</span>
+          </div>
+          <div class="event-body-content">
+            <h4>Grande Veillée d'Impact & d'Onction</h4>
+            <p>22h00 - 05h00 • Sanctuaire Principal CCPE • Prédication & Délivrance</p>
+            <span class="event-meta-tag">👥 <span id="event-cnt-1">184</span> fidèles inscrits</span>
+          </div>
+          <button class="btn-participate-toggle" id="btn-event-1" onclick="toggleEventParticipation(1)">
+            Je participe
+          </button>
+        </div>
+
+        <!-- Événement 2 -->
+        <div class="event-item-card">
+          <div class="event-date-box" style="background:#f59e0b; color:#000;">
+            <span class="day">26</span>
+            <span class="month">Oct</span>
+          </div>
+          <div class="event-body-content">
+            <h4>Culte Spécial d'Actions de Grâce</h4>
+            <p>09h30 - 12h30 • Culte de louange avec la Chorale au complet</p>
+            <span class="event-meta-tag">👥 <span id="event-cnt-2">312</span> fidèles inscrits</span>
+          </div>
+          <button class="btn-participate-toggle" id="btn-event-2" onclick="toggleEventParticipation(2)">
+            Je participe
+          </button>
+        </div>
+
+        <!-- Événement 3 -->
+        <div class="event-item-card">
+          <div class="event-date-box" style="background:#8b5cf6;">
+            <span class="day">01</span>
+            <span class="month">Nov</span>
+          </div>
+          <div class="event-body-content">
+            <h4>Séminaire des Couples & Familles Chrétiennes</h4>
+            <p>10h00 - 14h00 • Animé par Pasteur FIDEL ROMARIC et son épouse</p>
+            <span class="event-meta-tag">👥 <span id="event-cnt-3">58</span> couples inscrits</span>
+          </div>
+          <button class="btn-participate-toggle" id="btn-event-3" onclick="toggleEventParticipation(3)">
+            Je participe
+          </button>
+        </div>
+
+        <!-- Événement 4 -->
+        <div class="event-item-card">
+          <div class="event-date-box" style="background:#10b981;">
+            <span class="day">05</span>
+            <span class="month">Nov</span>
+          </div>
+          <div class="event-body-content">
+            <h4>Étude Biblique Approfondie</h4>
+            <p>18h30 - 20h00 • Salle de cours bibliques & Replay sur l'application</p>
+            <span class="event-meta-tag">👥 <span id="event-cnt-4">96</span> participants</span>
+          </div>
+          <button class="btn-participate-toggle" id="btn-event-4" onclick="toggleEventParticipation(4)">
+            Je participe
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top:12px;">
+        <button class="btn-primary" onclick="closeModal('modal-events-calendar')">Terminer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 10 (Phase 2) : Galerie Photos & Cultes -->
+  <div id="modal-gallery" class="modal-overlay hidden">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="font-size:1.3rem;">🖼️</span>
+          <h3>Galerie Photos & Cultes CCPE</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-gallery')">&times;</button>
+      </div>
+
+      <div class="gallery-albums-tabs">
+        <button class="pill active" onclick="filterGalleryAlbum('all', this)">Toutes les photos (10)</button>
+        <button class="pill" onclick="filterGalleryAlbum('predication', this)">Prédication & Pasteur</button>
+        <button class="pill" onclick="filterGalleryAlbum('priere', this)">Intercession & Prière</button>
+        <button class="pill" onclick="filterGalleryAlbum('louange', this)">Louange & Chantres</button>
+        <button class="pill" onclick="filterGalleryAlbum('communion', this)">Assemblée & Culte</button>
+      </div>
+
+      <div class="gallery-grid" id="gallery-photos-container">
+        <!-- Photo 1 -->
+        <div class="gallery-photo-item" data-category="priere" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_1.png" alt="Fidèle en prière fervente" loading="lazy">
+          <div class="gallery-photo-caption">Ferveur & Intercession • Culte de Réveil</div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="gallery-photo-item" data-category="louange" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_2.png" alt="Chantre au micro conduisant la louange" loading="lazy">
+          <div class="gallery-photo-caption">Chantre & Conduite de la Louange</div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="gallery-photo-item" data-category="priere" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_3.png" alt="Sœur dans l'adoration et la prière" loading="lazy">
+          <div class="gallery-photo-caption">Recueillement & Adoration Fraternelle</div>
+        </div>
+
+        <!-- Photo 4 -->
+        <div class="gallery-photo-item" data-category="communion" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_4.png" alt="Membres de l'église en communion et prière" loading="lazy">
+          <div class="gallery-photo-caption">Communion Fraternelle • Assemblée CCPE</div>
+        </div>
+
+        <!-- Photo 5 -->
+        <div class="gallery-photo-item" data-category="louange" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_5.png" alt="Sœur chantant avec dévotion pour la gloire de Dieu" loading="lazy">
+          <div class="gallery-photo-caption">Ministère de Louange & Exhortation</div>
+        </div>
+
+        <!-- Photo 6 -->
+        <div class="gallery-photo-item" data-category="communion" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_6.png" alt="Célébration collective de l'assemblée CCPE" loading="lazy">
+          <div class="gallery-photo-caption">Célébration Collective & Prière d'Ensemble</div>
+        </div>
+
+        <!-- Photo 7 -->
+        <div class="gallery-photo-item" data-category="predication" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_7.png" alt="Pasteur FIDEL ROMARIC en pleine prédication" loading="lazy">
+          <div class="gallery-photo-caption">Pasteur FIDEL ROMARIC • Prédication de la Parole</div>
+        </div>
+
+        <!-- Photo 8 -->
+        <div class="gallery-photo-item" data-category="priere" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_8.png" alt="Fidèles prosternés au sol dans l'humilité et la prière" loading="lazy">
+          <div class="gallery-photo-caption">Humilité devant Dieu • Prière & Prosternation</div>
+        </div>
+
+        <!-- Photo 9 -->
+        <div class="gallery-photo-item" data-category="priere" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_9.png" alt="Consécration et prière fervente de la jeunesse" loading="lazy">
+          <div class="gallery-photo-caption">Consécration de la Jeunesse • Culte d'Impact</div>
+        </div>
+
+        <!-- Photo 10 -->
+        <div class="gallery-photo-item" data-category="communion" onclick="previewGalleryPhoto(this)">
+          <img src="galerie_culte_10.png" alt="Adoration communautaire les mains levées" loading="lazy">
+          <div class="gallery-photo-caption">Adoration Communautaire • Mains Levées vers le Ciel</div>
+        </div>
+      </div>
+
+      <div class="modal-footer" style="margin-top:14px; display:flex; justify-content:space-between; align-items:center;">
+        <span style="font-size:0.75rem; color:var(--text-muted);">Cliquez sur une photo pour l'agrandir en plein écran</span>
+        <button class="btn-primary" onclick="closeModal('modal-gallery')">Fermer la galerie</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Agrandissement Photo (Lightbox) -->
+  <div id="modal-gallery-lightbox" class="modal-overlay hidden" style="z-index:99999;" onclick="closeModal('modal-gallery-lightbox')">
+    <div class="lightbox-modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close lightbox-close-btn" onclick="closeModal('modal-gallery-lightbox')">&times;</button>
+      <div class="lightbox-img-wrapper">
+        <img id="lightbox-full-img" src="" alt="Agrandissement photo CCPE">
+      </div>
+      <div id="lightbox-full-caption" class="lightbox-caption-text"></div>
+    </div>
+  </div>
+
+  <!-- Modal 11 (Phase 3) : Appels Vidéo Privés (WebRTC) -->
+  <div id="modal-video-call" class="modal-overlay hidden">
+    <div class="modal-card modal-voice-room">
+      <div class="modal-header">
+        <div class="room-title">
+          <span class="live-pill" style="background:#8b5cf6;">VISIO WEBRTC HD</span>
+          <h3>📹 Entretien Vidéo Pastoral Privé (Phase 3)</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-video-call')">&times;</button>
+      </div>
+
+      <div class="video-call-grid">
+        <!-- Flux Principal : Pasteur FIDEL ROMARIC -->
+        <div class="video-call-main">
+          <img src="pasteur_fidel.png" alt="Pasteur FIDEL ROMARIC">
+          <div class="call-speaker-badge">
+            <span class="call-sound-wave"></span>
+            <strong>Pasteur FIDEL ROMARIC</strong> • En ligne
+          </div>
+        </div>
+
+        <!-- Vignettes participants -->
+        <div class="video-call-side-tiles">
+          <div class="participant-video-tile">
+            <img src="profile_dalle.png" alt="Frère DALLE">
+            <div class="call-speaker-badge" style="font-size:0.65rem;">
+              <span>Vous (Frère DALLE)</span>
+            </div>
+          </div>
+          <div class="participant-video-tile">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=150&fit=crop&crop=faces" alt="Sœur Grace">
+            <div class="call-speaker-badge" style="font-size:0.65rem;">
+              <span>Sœur Grace Amani</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="call-controls-bar">
+        <button class="call-ctrl-btn" id="btn-call-mic" onclick="toggleCallMic()" title="Couper/Activer micro">🎙️</button>
+        <button class="call-ctrl-btn" id="btn-call-cam" onclick="toggleCallCam()" title="Couper/Activer caméra">📹</button>
+        <button class="call-ctrl-btn" onclick="showToast('📋 Notes Pastorales', 'Partage du verset de référence avec le Pasteur.')" title="Partager un verset">📖</button>
+        <button class="call-ctrl-btn btn-hangup" onclick="closeModal('modal-video-call')" title="Terminer l'appel">📞</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 12 (Phase 3) : Assistant IA Pastoral (Mobile) -->
+  <div id="modal-ai-assistant" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div class="ai-avatar-icon" style="width:32px; height:32px; font-size:1rem;">🤖</div>
+          <h3>Assistant IA Spirituel CCPE (Phase 3)</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal('modal-ai-assistant')">&times;</button>
+      </div>
+
+      <div class="ai-assistant-box" style="height:360px;">
+        <div class="ai-messages-list" id="mobile-ai-chat-messages">
+          <div class="ai-msg bot">
+            Shalom bien-aimé Frère DALLE ! Je suis l'Assistant Spirituel de l'église CCPE. Comment puis-je t'édifier aujourd'hui ? Tu peux me demander un verset d'encouragement, un résumé du culte ou des explications bibliques.
+          </div>
+        </div>
+
+        <div class="ai-suggestions-row">
+          <button class="ai-suggestion-chip" onclick="askMobileAI('Donne-moi un verset pour la paix du cœur')">🕊️ Verset de paix</button>
+          <button class="ai-suggestion-chip" onclick="askMobileAI('Comment payer ma dîme par Wave ou Orange Money ?')">💳 Aide Dîmes</button>
+          <button class="ai-suggestion-chip" onclick="askMobileAI('Quel est le thème de la prédication du Pasteur FIDEL ?')">📖 Thème du culte</button>
+        </div>
+
+        <form class="ai-input-form" onsubmit="handleMobileAISubmit(event)">
+          <input type="text" id="mobile-ai-input" placeholder="Posez votre question spirituelle..." required>
+          <button type="submit" class="btn-send-ai">Envoyer</button>
+        </form>
+      </div>
+
+      <div class="modal-footer" style="margin-top:12px;">
+        <button class="btn-secondary" onclick="closeModal('modal-ai-assistant')">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  </div> <!-- /portal-demo -->
+
+  <script>
+  // ========= EFFET MACHINE À ÉCRIRE AUTOMATIQUE (TYPEWRITER) =========
+  (function initTypewriter() {
+    const target = document.getElementById('typewriter-title');
+    if (!target) return;
+
+    const fullText = "ARCHITECTURE GLOBALE & PROPOSITION BUDGÉTAIRE";
+    let isDeleting = false;
+    let charIndex = fullText.length;
+    const typingSpeed = 65;        // Vitesse d'écriture lettre par lettre (ms)
+    const erasingSpeed = 30;       // Vitesse d'effacement (ms)
+    const pauseFull = 3500;        // Temps de lecture du texte complet (ms)
+    const pauseEmpty = 700;        // Pause une fois effacé avant de réécrire (ms)
+
+    function tick() {
+      if (!isDeleting) {
+        charIndex++;
+        target.textContent = fullText.substring(0, charIndex);
+
+        if (charIndex >= fullText.length) {
+          isDeleting = true;
+          setTimeout(tick, pauseFull);
+          return;
+        }
+        setTimeout(tick, typingSpeed);
+      } else {
+        charIndex--;
+        target.textContent = fullText.substring(0, charIndex);
+
+        if (charIndex <= 0) {
+          isDeleting = false;
+          setTimeout(tick, pauseEmpty);
+          return;
+        }
+        setTimeout(tick, erasingSpeed);
+      }
+    }
+
+    // Démarre la première séquence d'effacement après un temps de lecture initial
+    setTimeout(() => {
+      isDeleting = true;
+      tick();
+    }, 2800);
+  })();
+  </script>
+  <script src="app.js"></script>
+</body>
+</html>
