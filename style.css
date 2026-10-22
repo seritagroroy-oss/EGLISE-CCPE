@@ -4999,6 +4999,473 @@ body {
   color: #b91c1c;
 }
 
+/* ========================================================
+   OPTIMISATION RESPONSIVE MOBILE & SMARTPHONES ANDROID
+   Adapté pour : Samsung, Tecno, Infinix, Xiaomi, iPhone
+   ======================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Barre de Navigation Supérieure Mobile */
+  .top-nav {
+    height: auto !important;
+    min-height: 60px;
+    padding: 10px 12px !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    position: sticky !important;
+    top: 0 !important;
+  }
+
+  .brand {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 10px;
+  }
+
+  .brand-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .brand-title {
+    font-size: 0.9rem;
+    letter-spacing: 0.2px;
+  }
+
+  .brand-subtitle {
+    font-size: 0.62rem;
+  }
+
+  .top-actions {
+    width: 100%;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .portal-nav-links {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    display: flex;
+    justify-content: flex-start;
+    gap: 6px;
+    padding: 4px 2px;
+    scrollbar-width: none;
+  }
+
+  .portal-nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .portal-nav-btn {
+    padding: 7px 12px;
+    font-size: 0.76rem;
+    flex-shrink: 0;
+    border-radius: 20px;
+  }
+
+  .view-switcher {
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .view-switcher::-webkit-scrollbar {
+    display: none;
+  }
+
+  .view-btn {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    flex-shrink: 0;
+  }
+
+  /* 2. Page Accueil (Cover Hero) sur Smartphone */
+  .cover-portal {
+    padding: 0 10px;
+    margin: 14px auto 36px;
+  }
+
+  .cover-hero {
+    padding: 24px 14px;
+    border-radius: 18px;
+    margin-bottom: 20px;
+  }
+
+  .hero-duo-avatars {
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .hero-logo-box {
+    width: 86px;
+    height: 86px;
+    padding: 6px;
+    border-radius: 16px;
+  }
+
+  .hero-pastor-box {
+    width: 92px;
+    height: 92px;
+  }
+
+  .cover-church-tag {
+    font-size: 0.7rem;
+    padding: 3px 12px;
+    margin-bottom: 10px;
+  }
+
+  .cover-main-title {
+    font-size: 1.35rem;
+    line-height: 1.3;
+    letter-spacing: normal;
+    margin-bottom: 10px;
+  }
+
+  .typewriter-wrapper {
+    font-size: 1.25rem;
+    min-height: auto;
+  }
+
+  .cover-subtitle {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    margin-bottom: 16px;
+  }
+
+  .cover-pastor-mention {
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cover-modules-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .module-action-card {
+    padding: 22px 18px;
+    border-radius: 18px;
+  }
+
+  .module-card-icon {
+    font-size: 2.2rem;
+  }
+
+  .module-action-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .module-action-card p {
+    font-size: 0.84rem;
+    margin-bottom: 14px;
+  }
+
+  .cover-demo-banner {
+    padding: 20px 16px;
+    border-radius: 18px;
+    flex-direction: column;
+    text-align: center;
+    gap: 14px;
+  }
+
+  .btn-launch-demo {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+  }
+
+  /* 3. Page Architecture & Budget sur Smartphone */
+  .page-container {
+    padding: 0 10px;
+    margin: 14px auto 36px;
+  }
+
+  .portal-top-bar {
+    margin-bottom: 16px;
+  }
+
+  .btn-back-home {
+    width: 100%;
+    justify-content: center;
+    padding: 10px;
+    font-size: 0.82rem;
+  }
+
+  .portal-page-header {
+    margin-bottom: 22px;
+  }
+
+  .portal-page-header h2 {
+    font-size: 1.35rem;
+    line-height: 1.3;
+  }
+
+  .portal-page-header p {
+    font-size: 0.85rem;
+  }
+
+  .unified-architecture-card,
+  .cloud-server-card {
+    padding: 18px 14px !important;
+    border-radius: 16px !important;
+    margin-bottom: 22px !important;
+  }
+
+  .unified-arch-header h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .unified-arch-sub {
+    font-size: 0.84rem;
+  }
+
+  .unified-arch-stats-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .arch-stat-badge {
+    width: 100%;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 6px 10px;
+  }
+
+  /* Toutes les grilles passent en 1 colonne sur mobile */
+  .unified-pillars-grid,
+  .cloud-pricing-grid,
+  .domain-pricing-grid,
+  .ai-pricing-grid,
+  .stores-pricing-grid,
+  .honoraires-pricing-grid,
+  .milestones-timeline-grid,
+  .cloud-reasons-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .arch-pillar-box,
+  .cloud-tier-card,
+  .domain-tier-card,
+  .ai-tier-card,
+  .store-tier-card,
+  .honoraires-tier-card {
+    padding: 18px 14px !important;
+  }
+
+  .cloud-price-main,
+  .domain-price-main,
+  .ai-price-main,
+  .store-price-main {
+    font-size: 1.45rem !important;
+  }
+
+  .table-comparison-wrapper {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    margin: 16px 0;
+    width: 100%;
+    display: block;
+  }
+
+  .pwa-comparison-table {
+    min-width: 540px;
+    font-size: 0.76rem;
+  }
+
+  .cloud-notice-bar {
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+    font-size: 0.76rem;
+  }
+
+  .quote-guarantees-banner {
+    grid-template-columns: 1fr !important;
+    padding: 18px 14px;
+    gap: 14px;
+  }
+
+  .portal-bottom-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .portal-bottom-actions button {
+    max-width: 100% !important;
+    width: 100%;
+    padding: 13px;
+    font-size: 0.88rem;
+  }
+
+  /* 4. Démonstration Interactive sur Smartphone */
+  .presentation-workspace {
+    padding: 8px 6px !important;
+    gap: 14px !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .mode-split {
+    grid-template-columns: 1fr !important;
+  }
+
+  .screen-column {
+    width: 100% !important;
+  }
+
+  .phone-mockup {
+    width: 100% !important;
+    max-width: 380px !important;
+    height: 720px !important;
+    margin: 0 auto !important;
+    border-radius: 26px !important;
+    border: 3px solid #1e293b !important;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .phone-screen {
+    padding-top: 36px;
+  }
+
+  .phone-notch {
+    width: 100px;
+    height: 24px;
+    top: 8px;
+  }
+
+  .admin-shell {
+    padding: 12px !important;
+  }
+
+  .admin-tabs-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    gap: 6px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .admin-tabs-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .admin-tab-btn {
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    flex-shrink: 0;
+  }
+
+  .analytics-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .kpi-dashboard-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px;
+  }
+
+  .bars-container {
+    height: 120px;
+  }
+
+  /* 5. Modals & Galerie sur Smartphone */
+  .modal-card {
+    width: 95% !important;
+    max-width: 95% !important;
+    padding: 16px 12px !important;
+    border-radius: 16px !important;
+    max-height: 92vh !important;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .gallery-photo-item {
+    height: 120px !important;
+  }
+
+  .lightbox-modal-content {
+    width: 96% !important;
+    padding: 14px 10px !important;
+  }
+
+  .lightbox-img-wrapper {
+    max-height: 55vh !important;
+  }
+
+  .lightbox-caption-text {
+    font-size: 0.82rem !important;
+    margin-top: 10px !important;
+  }
+
+  /* 6. Fenêtre Pop-up Auteur sur Smartphone */
+  .author-modal {
+    max-width: 94% !important;
+    padding: 22px 16px !important;
+    border-radius: 18px !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+  }
+
+  .author-logo-ring {
+    width: 58px !important;
+    height: 58px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .author-modal h2 {
+    font-size: 1.15rem !important;
+  }
+
+  .author-intro {
+    font-size: 0.78rem !important;
+    margin-bottom: 14px !important;
+  }
+
+  .author-card {
+    padding: 10px 12px !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .author-avatar {
+    width: 42px !important;
+    height: 42px !important;
+    font-size: 0.9rem !important;
+  }
+
+  .author-name {
+    font-size: 1rem !important;
+  }
+
+  .author-role {
+    font-size: 0.72rem !important;
+  }
+
+  .author-dedication {
+    font-size: 0.72rem !important;
+    margin-bottom: 16px !important;
+  }
+
+  .author-btn {
+    padding: 11px !important;
+    font-size: 0.88rem !important;
+  }
+}
+
+
 
 
 
