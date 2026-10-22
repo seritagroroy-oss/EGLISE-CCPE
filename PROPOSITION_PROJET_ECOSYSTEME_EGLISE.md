@@ -128,4 +128,28 @@ Pour mettre l'application entre les mains des fidèles, l'église peut combiner 
 
 ---
 
-> **Investissement Logiciel :** Forfait de développement global tout-en-un sur devis personnalisé avec facilités de règlement échelonné en 3 ou 4 tranches progressives selon les jalons de validation.
+## 8. Estimation des Honoraires de Conception & Main-d'Œuvre
+
+**Développeur & Concepteur de la Solution :** SERI TAGRO ROY
+
+### 📊 Grille des Formules d'Investissement Logiciel :
+
+| Formule | Estimation Honoraires | Modalités de Règlement | Contenu & Livrables Clés |
+| :--- | :--- | :--- | :--- |
+| **🔹 Formule Démarrage Ministère** | **1 200 000 FCFA** | 3 tranches de **400 000 FCFA** | Socle MVP complet (Membres, QR, Dîmes Mobile Money, Push, Bibliothèque) |
+| **⭐ Formule Recommandée Tout-en-Un** | **1 500 000 FCFA** | 3 ou 4 tranches progressives | **Les 14 modules complets**, Streaming direct, Messagerie, Calendrier, Galerie photos, IA pastorale, formation secrétariat & support 6 mois |
+| **💎 Formule Excellence & Haute Technologie** | **2 200 000 FCFA** | 4 tranches de **550 000 FCFA** | Formule complète + Visio pastorale WebRTC privée + IA avancée sur archives CCPE + Assistance VIP 12 mois |
+
+> ℹ️ **Repère de marché :** Un projet de cette envergure développé en agence logicielle à Abidjan est évalué entre **3 500 000 et 6 000 000 FCFA**. Le tarif proposé par SERI TAGRO ROY est un tarif préférentiel direct, sans intermédiaire ni marge d'agence.
+
+### 📅 Le Protocole de Paiement Échelonné (Confiance & Résultats) :
+* **Jalon 1 (40% — 600 000 FCFA)** : Acompte de lancement, maquettes graphiques et mise en place de l'infrastructure cloud.
+* **Jalon 2 (30% — 450 000 FCFA)** : Validation de la démo fonctionnelle (application mobile testable et transactions Mobile Money).
+* **Jalon 3 (30% — 450 000 FCFA)** : Déploiement final, formation des équipes administratives et remise officielle des accès.
+
+### 🛠️ Contrat d'Assistance & Maintenance Mensuelle (Optionnel) :
+* **35 000 à 50 000 FCFA / mois** : Supervision proactive du serveur 24h/24, sauvegardes automatiques répliquées, assistance technique directe et mises à jour régulières de sécurité.
+
+---
+
+> **Propriété Exclusive CCPE :** L'intégralité du code source, des bases de données et des accès serveurs sont la propriété exclusive du *Centre Chrétien Parole & Esprit*.

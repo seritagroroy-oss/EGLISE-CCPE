@@ -4908,6 +4908,98 @@ body {
   font-weight: 700;
 }
 
+/* ============================================== */
+/* SECTION HONORAIRES MAIN-D'ŒUVRE DU DÉVELOPPEUR  */
+/* ============================================== */
+.honoraires-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 900px) {
+  .honoraires-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.honoraires-tier-card {
+  background: #ffffff;
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: all 0.25s ease;
+}
+
+.honoraires-tier-card.featured-main {
+  border-color: #b91c1c;
+  box-shadow: 0 10px 30px rgba(185, 28, 28, 0.15);
+  background: linear-gradient(180deg, #ffffff 0%, #fff7f7 100%);
+}
+
+.honoraires-badge-gold {
+  position: absolute;
+  top: -12px;
+  left: 20px;
+  background: linear-gradient(135deg, #b91c1c, #dc2626);
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 3px 12px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+}
+
+.milestones-timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 18px 0;
+}
+
+@media (max-width: 768px) {
+  .milestones-timeline-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.milestone-step-card {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-md);
+  padding: 16px;
+  position: relative;
+}
+
+.milestone-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.milestone-step-number {
+  background: #b91c1c;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.milestone-step-percent {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #b91c1c;
+}
+
+
 
 
 
