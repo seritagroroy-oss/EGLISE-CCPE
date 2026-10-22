@@ -104,4 +104,28 @@ L'intelligence artificielle repose sur les modèles de pointe mondiaux (**OpenAI
 
 ---
 
+## 7. Déploiement Mobile : Frais des Stores (Google Play / Apple) vs Solution PWA
+
+### 📱 Deux Approches de Déploiement pour l'Église :
+Pour mettre l'application entre les mains des fidèles, l'église peut combiner les **Stores Officiels** et la technologie **PWA (Progressive Web Application)** :
+
+| Solution | Coût Réel Facturé | Fréquence | Modalités & Avantages |
+| :--- | :--- | :--- | :--- |
+| **🤖 Google Play Store** *(Android)* | **16 000 FCFA** *(25 $ USD)* | **1 seule fois à vie** | Couvre ~85% des fidèles en Côte d'Ivoire. Compte officiel au nom du CCPE. |
+| **🍏 Apple App Store** *(iOS / iPhone)* | **65 000 FCFA / an** *(99 $ USD)* | **Annuelle obligatoire** | Exigé par Apple pour figurer sur l'App Store officiel iPhone. |
+| **🚀 PWA (Progressive Web App)** | **0 FCFA (Gratuit à vie)** | **Zéro abonnement** | S'installe en 1 clic sur l'écran d'accueil sans passer par les stores. |
+
+### ⚖️ Tableau Comparatif des Différences :
+* **Installation :** Stores = recherche manuelle dans le store / PWA = 1 clic direct « Installer l'application CCPE » depuis le lien officiel de l'église.
+* **Mises à jour :** Stores = 2 à 7 jours d'attente d'approbation Apple / PWA = instantanées en direct pour toute l'assemblée.
+* **Mémoire :** Stores = 25 à 45 Mo / PWA = 2 à 5 Mo (ultra-légère pour les smartphones modestes).
+* **Notifications Push & Hors-ligne :** Supportés sur les deux approches.
+
+### 💡 Recommandation Stratégique pour le Pasteur FIDEL ROMARIC :
+> 1. Déployer immédiatement la **PWA (0 FCFA)** pour tous les fidèles (Android et iPhone).
+> 2. Ouvrir le compte **Google Play Store (16 000 FCFA à vie)** pour assurer la visibilité officielle sur Android.
+> 3. L'abonnement annuel Apple (65 000 F/an) reste optionnel et pourra être activé ultérieurement selon la trésorerie.
+
+---
+
 > **Investissement Logiciel :** Forfait de développement global tout-en-un sur devis personnalisé avec facilités de règlement échelonné en 3 ou 4 tranches progressives selon les jalons de validation.
