@@ -109,7 +109,8 @@
       <div class="portal-nav-links">
         <button class="portal-nav-btn active" onclick="showPortalSection('cover')" id="portal-btn-cover">🏠 Accueil</button>
         <button class="portal-nav-btn" onclick="showPortalSection('plan')" id="portal-btn-plan">🏛️ Architecture</button>
-        <button class="portal-nav-btn" onclick="showPortalSection('devis')" id="portal-btn-devis">💼 Budget & Devis</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('tech')" id="portal-btn-tech">💻 Stack &amp; Langages</button>
+        <button class="portal-nav-btn" onclick="showPortalSection('devis')" id="portal-btn-devis">💼 Budget &amp; Devis</button>
         <button class="portal-nav-btn" onclick="showPortalSection('demo')" id="portal-btn-demo">🚀 Démo en Direct</button>
       </div>
     </div>
@@ -147,43 +148,62 @@
         </div>
       </div>
 
-      <!-- Les 2 Grands Modules Cliquables -->
+      <!-- Les 3 Grands Modules Cliquables -->
       <div class="cover-modules-grid">
         <!-- Module 1 : ARCHITECTURE DU PROJET -->
         <div class="module-action-card card-plan" onclick="showPortalSection('plan')">
           <div>
             <span class="module-badge-tag tag-red">Module 1</span>
             <div class="module-card-icon">🏛️</div>
-            <h3>Architecture du Projet</h3>
-            <p>Découvrez la feuille de route technique avec les phases de développement, les modules fonctionnels et le calendrier de déploiement.</p>
+            <h3>Architecture Métier</h3>
+            <p>Feuille de route technique avec les 3 piliers opérationnels, les 14 modules et le calendrier de déploiement.</p>
             <ul class="module-card-features">
-              <li>Roadmap en 3 phases (MVP → V2 → V3)</li>
-              <li>Architecture technique & modules</li>
-              <li>Calendrier de livraison</li>
-              <li>Sécurité & infrastructure cloud</li>
+              <li>14 modules métiers tout-en-un</li>
+              <li>Roadmap en 3 piliers (MVP → V2 → V3)</li>
+              <li>Calendrier de livraison par phase</li>
+              <li>Garanties et maintenance évolutive</li>
             </ul>
           </div>
           <button class="btn-card-action btn-plan-action">
-            🏛️ Consulter l'Architecture du Projet →
+            🏛️ Explorer l'Architecture Métier →
           </button>
         </div>
 
-        <!-- Module 2 : PROPOSITION BUDGÉTAIRE -->
+        <!-- Module 2 : STACK TECHNIQUE & LANGAGES -->
+        <div class="module-action-card card-tech" onclick="showPortalSection('tech')">
+          <div>
+            <span class="module-badge-tag tag-blue">Module 2</span>
+            <div class="module-card-icon">💻</div>
+            <h3>Stack &amp; Langages</h3>
+            <p>Tous les langages de programmation, frameworks et technologies retenus pour concevoir l'application CCPE.</p>
+            <ul class="module-card-features">
+              <li>Flutter &amp; Dart (Google) multiplateforme</li>
+              <li>Node.js / Express &amp; WebSockets temps réel</li>
+              <li>PostgreSQL &amp; Redis ultra-sécurisés</li>
+              <li>Python 3.11 &amp; Moteur IA biblique</li>
+            </ul>
+          </div>
+          <button class="btn-card-action btn-tech-action">
+            💻 Découvrir les Langages &amp; Outils →
+          </button>
+        </div>
+
+        <!-- Module 3 : PROPOSITION BUDGÉTAIRE -->
         <div class="module-action-card card-devis" onclick="showPortalSection('devis')">
           <div>
-            <span class="module-badge-tag tag-gold">Module 2</span>
+            <span class="module-badge-tag tag-gold">Module 3</span>
             <div class="module-card-icon">💼</div>
             <h3>Proposition Budgétaire</h3>
-            <p>Tarification transparente par phase de développement. Chaque investissement est détaillé avec les livrables inclus.</p>
+            <p>Tarification transparente : hébergement Cloud, Stores vs PWA et honoraires de conception logicielle.</p>
             <ul class="module-card-features">
-              <li>Tarifs par phase de développement</li>
-              <li>Détail des livrables par forfait</li>
-              <li>Options de maintenance & hébergement</li>
-              <li>Garanties et engagement qualité</li>
+              <li>Infrastructures Cloud &amp; noms de domaine</li>
+              <li>Comparatif Stores vs PWA économique</li>
+              <li>Honoraires de conception SERI TAGRO ROY</li>
+              <li>Échéancier de paiement par étapes</li>
             </ul>
           </div>
           <button class="btn-card-action btn-devis-action">
-            💼 Consulter la Proposition Budgétaire →
+            💼 Consulter le Budget &amp; Devis →
           </button>
         </div>
       </div>
@@ -449,8 +469,304 @@
       </div>
 
       <div class="portal-bottom-actions">
+        <button class="btn-card-action btn-tech-action" style="max-width:380px;" onclick="showPortalSection('tech')">💻 Découvrir les Langages &amp; Stack →</button>
         <button class="btn-card-action btn-devis-action" style="max-width:380px;" onclick="showPortalSection('devis')">💼 Voir la Proposition Budgétaire →</button>
         <button class="btn-card-action btn-plan-action" style="max-width:380px;" onclick="showPortalSection('demo')">🚀 Voir la Démo en Direct →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================== -->
+  <!-- PAGE TECHNIQUE : STACK & LANGAGES DE PROG      -->
+  <!-- ============================================== -->
+  <section id="portal-tech" class="portal-section hidden">
+    <div class="page-container">
+      <div class="portal-top-bar">
+        <button class="btn-back-home" onclick="showPortalSection('cover')">← Retour à l'Accueil</button>
+      </div>
+      <div class="portal-page-header">
+        <h2>💻 Langages de Programmation &amp; Stack Technique CCPE</h2>
+        <p>Présentation exhaustive des technologies de pointe, langages de programmation et frameworks sélectionnés pour concevoir l'écosystème numérique de l'Église CCPE.</p>
+      </div>
+
+      <!-- CARTE D'INTRO STACK -->
+      <div class="unified-architecture-card" style="border-top-color: #0284c7; margin-bottom: 28px;">
+        <div class="unified-arch-header">
+          <div class="unified-arch-badge" style="background: rgba(2, 132, 199, 0.1); color: #0369a1;">
+            <span class="badge-dot blink" style="background:#0284c7;"></span> TECHNOLOGIES DE POINTE PENSÉES POUR LA PERFORMANCE &amp; LA SÉCURITÉ
+          </div>
+          <h3>Une Architecture Logicielle Robuste, Évolutive &amp; Économique</h3>
+          <p class="unified-arch-sub">
+            Chaque langage et chaque brique technologique ont été minutieusement sélectionnés par le concepteur <strong>SERI TAGRO ROY</strong> pour garantir une rapidité exceptionnelle, une sécurité des données et des dons de niveau bancaire, et une évolutivité sans faille pour les années à venir.
+          </p>
+          <div class="unified-arch-stats-row">
+            <div class="arch-stat-badge">📱 <strong>Flutter / Dart</strong> : 1 Code Unique Android, iOS &amp; Web</div>
+            <div class="arch-stat-badge">⚡ <strong>Node.js / Express</strong> : API Ultra-rapide &amp; Temps Réel</div>
+            <div class="arch-stat-badge">🔒 <strong>PostgreSQL + Redis</strong> : Intégrité &amp; Vitesse Absolue</div>
+            <div class="arch-stat-badge">🤖 <strong>Python 3.11</strong> : IA &amp; Automatisation Spirituelle</div>
+          </div>
+        </div>
+
+        <!-- Grille des 6 Domaines Technologiques -->
+        <div class="tech-stack-grid">
+          
+          <!-- Carte 1 : Mobile & PWA -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #e0f2fe; color: #0284c7;">📱</div>
+              <div>
+                <span class="tech-role-tag">Frontend Mobile &amp; Membres</span>
+                <h4>Flutter &amp; Dart (Google)</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">Dart 3.x</span>
+              <span class="tech-pill">Flutter SDK</span>
+              <span class="tech-pill">PWA / WebAssembly</span>
+            </div>
+            <p class="tech-card-desc">
+              Framework moderne créé par Google. Permet de compiler une application native haute performance pour <strong>Android (Samsung, Tecno, Xiaomi...)</strong>, <strong>iPhone (iOS)</strong> et <strong>PWA Web</strong> à partir d'une seule base de code source sans payer deux développements distincts.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>⚡ Fluidité 60-120 FPS :</strong> Moteur graphique Skia/Impeller pour des transitions douces et professionnelles.
+              </div>
+              <div class="tech-hl-item">
+                <strong>📴 Mode Hors-Ligne :</strong> Consultation des versets bibliques et annonces même sans connexion internet active.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🔔 Notifications Push :</strong> Intégration native Firebase Cloud Messaging pour alerter instantanément les fidèles.
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 2 : Portail Web Pasteur -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #fef3c7; color: #d97706;">🖥️</div>
+              <div>
+                <span class="tech-role-tag">Tableau de Bord Pasteur</span>
+                <h4>HTML5, CSS3 Moderne &amp; TypeScript</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">TypeScript</span>
+              <span class="tech-pill">CSS3 Flex/Grid</span>
+              <span class="tech-pill">Chart.js</span>
+            </div>
+            <p class="tech-card-desc">
+              Le tableau de bord administratif du Pasteur et des responsables s'appuie sur le standard Web moderne avec typage strict TypeScript pour éliminer les bugs et offrir une interface ergonomique accessible sur PC, Mac et tablette.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>📊 Visualisation Graphique :</strong> Courbes d'évolution des présences aux cultes et graphiques financiers interactifs (Chart.js).
+              </div>
+              <div class="tech-hl-item">
+                <strong>🎨 Design Épuré &amp; Responsive :</strong> Adaptation automatique à la taille de l'écran avec thématique soignée aux couleurs de l'église.
+              </div>
+              <div class="tech-hl-item">
+                <strong>📄 Export Instantané :</strong> Génération automatique des fiches de membres et rapports en PDF/Excel.
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 3 : Backend & API REST -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #dcfce7; color: #16a34a;">⚙️</div>
+              <div>
+                <span class="tech-role-tag">Cœur du Système &amp; Serveur</span>
+                <h4>Node.js / Express &amp; WebSockets</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">Node.js LTS</span>
+              <span class="tech-pill">Express REST API</span>
+              <span class="tech-pill">Socket.io</span>
+            </div>
+            <p class="tech-card-desc">
+              Le moteur serveur asynchrone gère toutes les requêtes entre les applications des fidèles et la base de données. Il garantit un temps de réponse inférieur à 100 millisecondes, même lors des pics de culte dominical.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>⏱️ Temps Réel (WebSockets) :</strong> Réception en direct des demandes de prière et chat d'échange pastoral sans rafraîchir la page.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🔐 Sécurité JWT &amp; Rôles :</strong> Contrôle strict des accès (Pasteur, Diacre, Responsable de département, Membre standard).
+              </div>
+              <div class="tech-hl-item">
+                <strong>🛡️ Protection Anti-DDoS :</strong> Limitation des requêtes (Rate Limiting) et validation stricte de toutes les données entrantes.
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 4 : Base de Données & Cache -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #ede9fe; color: #7c3aed;">🗄️</div>
+              <div>
+                <span class="tech-role-tag">Données &amp; Médias</span>
+                <h4>PostgreSQL, Redis &amp; Cloud Storage</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">PostgreSQL</span>
+              <span class="tech-pill">Redis Cache</span>
+              <span class="tech-pill">S3 / MinIO</span>
+            </div>
+            <p class="tech-card-desc">
+              Architecture de données compartimentée : une base relationnelle conforme aux normes bancaires pour les finances et membres, un cache ultra-rapide en mémoire vive et un stockage d'objets pour les médias.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>🔒 Intégrité Financière ACID :</strong> Aucune dîme ou offrande ne peut être perdue en cas de coupure réseau.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🚀 Cache Redis (&lt; 10ms) :</strong> Accélération instantanée du chargement des annonces et de la liste des cultes.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🎧 Médias Optimisés :</strong> Stockage audio MP3 des prédications et streaming fluide sans saturer le serveur principal.
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 5 : Intelligence Artificielle & Automatisation -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #fee2e2; color: #dc2626;">🤖</div>
+              <div>
+                <span class="tech-role-tag">Module d'Intelligence Spirituelle</span>
+                <h4>Python 3.11 &amp; Moteurs IA (OpenAI / Gemini)</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">Python 3.11</span>
+              <span class="tech-pill">OpenAI / Claude API</span>
+              <span class="tech-pill">Whisper Audio</span>
+            </div>
+            <p class="tech-card-desc">
+              Scripts Python dédiés au traitement du langage naturel, à la transcription automatique des prédications et à l'assistant spirituel biblique interactif.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>📖 Recherche Biblique Contextuelle :</strong> Trouver instantanément les versets et enseignements correspondants à un thème chrétien.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🎙️ Transcription Automatique :</strong> Transformation de l'audio du culte du dimanche en texte structuré avec résumé des 3 points clés.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🛡️ Filtrage Doctrinal :</strong> Réponses calquées sur les Saintes Écritures et la vision théologique de l'église.
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte 6 : Paiements, Sécurité & Déploiement -->
+          <div class="tech-card">
+            <div class="tech-card-header">
+              <div class="tech-icon-box" style="background: #f1f5f9; color: #334155;">🔒</div>
+              <div>
+                <span class="tech-role-tag">Infrastructure &amp; Mobile Money</span>
+                <h4>Docker, Nginx SSL &amp; SDKs Wave / OM / MTN</h4>
+              </div>
+            </div>
+            <div class="tech-badges-row">
+              <span class="tech-pill">Docker</span>
+              <span class="tech-pill">Nginx SSL A+</span>
+              <span class="tech-pill">APIs Mobile Money</span>
+            </div>
+            <p class="tech-card-desc">
+              Déploiement conteneurisé moderne assurant une maintenance facile, des sauvegardes automatiques quotidiennes et des transactions de dons 100% sécurisées.
+            </p>
+            <div class="tech-highlights-box">
+              <div class="tech-hl-item">
+                <strong>💳 Mobile Money Natif :</strong> Intégration directe des APIs officielles de Wave, Orange Money et MTN Côte d'Ivoire avec notifications instantanées.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🐳 Portabilité Docker :</strong> Tout le système est conteneurisé : migration ou restauration complète en quelques minutes.
+              </div>
+              <div class="tech-hl-item">
+                <strong>🔑 Chiffrement HTTPS/TLS 1.3 :</strong> Certificat de sécurité SSL Let's Encrypt avec renouvellement automatisé.
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Tableau Récapitulatif Synthétique -->
+        <div style="margin-top: 36px;">
+          <h4 style="font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+            📋 Matrice Récapitulative des Langages &amp; Outils
+          </h4>
+          <div class="table-comparison-wrapper">
+            <table class="pwa-comparison-table">
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Composant de la Plateforme</th>
+                  <th style="width: 25%;">Langages &amp; Frameworks</th>
+                  <th style="width: 25%;">Rôle Principal</th>
+                  <th style="width: 30%;">Bénéfice Clé pour l'Église CCPE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>📱 App Mobile Membres</strong></td>
+                  <td><span class="tech-table-badge badge-blue">Dart / Flutter (Google)</span></td>
+                  <td>Application Android (Play Store/APK) &amp; iOS (App Store)</td>
+                  <td>1 seul développement pour tous les téléphones, fluidité 60 FPS, mode hors-ligne.</td>
+                </tr>
+                <tr>
+                  <td><strong>🌐 Version Web PWA</strong></td>
+                  <td><span class="tech-table-badge badge-orange">HTML5 / CSS3 / JavaScript</span></td>
+                  <td>Accès direct navigateur sans passer par les Stores</td>
+                  <td>Zéro commission de Store, installation en 1 clic sur l'écran d'accueil du téléphone.</td>
+                </tr>
+                <tr>
+                  <td><strong>🖥️ Dashboard Pasteur</strong></td>
+                  <td><span class="tech-table-badge badge-purple">TypeScript / Chart.js</span></td>
+                  <td>Panneau d'administration pastorale &amp; départementale</td>
+                  <td>Gestion en temps réel des membres, cultes, dîmes et statistiques graphiques.</td>
+                </tr>
+                <tr>
+                  <td><strong>⚙️ API Serveur &amp; Temps Réel</strong></td>
+                  <td><span class="tech-table-badge badge-green">Node.js / Express / Socket.io</span></td>
+                  <td>Moteur central, gestion des flux et requêtes</td>
+                  <td>Vitesse &lt; 100ms, communication instantanée des prières et notifications.</td>
+                </tr>
+                <tr>
+                  <td><strong>🗄️ Base de Données Sécurisée</strong></td>
+                  <td><span class="tech-table-badge badge-indigo">PostgreSQL / Redis</span></td>
+                  <td>Stockage relationnel &amp; cache ultra-rapide</td>
+                  <td>Conformité bancaire ACID pour les dîmes, cache mémoire pour fluidité immédiate.</td>
+                </tr>
+                <tr>
+                  <td><strong>🤖 Intelligence Artificielle</strong></td>
+                  <td><span class="tech-table-badge badge-red">Python 3.11 / LLM APIs</span></td>
+                  <td>Assistant spirituel biblique &amp; transcription audio</td>
+                  <td>Résumé automatique des cultes du dimanche, réponses aux questions bibliques.</td>
+                </tr>
+                <tr>
+                  <td><strong>💳 Passerelles de Paiement</strong></td>
+                  <td><span class="tech-table-badge badge-yellow">Wave / OM / MTN REST APIs</span></td>
+                  <td>Collecte des dîmes, offrandes et dons de construction</td>
+                  <td>Vérification cryptographique HMAC, zéro fraude, confirmation immédiate par SMS/Push.</td>
+                </tr>
+                <tr>
+                  <td><strong>🔒 Hébergement &amp; Sécurité</strong></td>
+                  <td><span class="tech-table-badge badge-dark">Docker / Nginx / SSL Let's Encrypt</span></td>
+                  <td>Serveur Cloud Linux, pare-feu et conteneurs</td>
+                  <td>Sécurité maximale, sauvegardes journalières automatisées, haute disponibilité 99.9%.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="portal-bottom-actions">
+        <button class="btn-card-action btn-plan-action" style="max-width:320px;" onclick="showPortalSection('plan')">🏛️ Revoir l'Architecture Métier</button>
+        <button class="btn-card-action btn-devis-action" style="max-width:320px;" onclick="showPortalSection('devis')">💼 Voir le Budget &amp; Devis →</button>
+        <button class="btn-card-action btn-tech-action" style="max-width:320px;" onclick="showPortalSection('demo')">🚀 Lancer la Démo Live →</button>
       </div>
     </div>
   </section>
